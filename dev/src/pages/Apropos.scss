@@ -1,0 +1,186 @@
+@import '../App.scss';
+
+.about-container {
+
+    .main-section {
+        padding-top: 45px;
+        padding-bottom: 88px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+
+            h1 {
+                font-size: $f-38;
+                font-weight: 800;
+            }
+
+            h2 {
+                font-size: $f-38;
+                font-weight: 800;
+                font-family: $titleFont;
+                margin-left: 12px;
+                transform: rotate(-2deg);
+            }
+
+        }
+
+        p {
+            max-width: 670px;
+            text-align: center;
+            font-size: $f-18;
+            line-height: 28px;
+            margin-bottom: 32px;
+        }
+    }
+
+    .block13 {
+        padding: 0px 96px;
+
+        .contain {
+            background-color: $grey-clair;
+            padding: 48px 56px;
+            border-radius: 32px;
+
+            h2 {
+                font-size: $f-34;
+                font-weight: 800;
+                font-family: $titleFont;
+                margin-bottom: 32px;
+            }
+
+            .main {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+            .paragraph {
+                background-color: $grey-fonce;
+                padding: 24px;
+                border-radius: 24px;
+
+                h3 {
+                    font-size: $f-18;
+                    font-weight: 700;
+                    margin-bottom: 8px;
+                    font-family: $titleFont;
+                }
+
+                p {
+                    font-size: $f-16;
+                    font-weight: 400;
+                    line-height: 24px;
+                }
+            }
+
+            .paragraph:nth-child(2n) {
+                margin-left: 32px;
+                margin-right: 32px;
+            }
+        }
+    }
+
+    .block14 {
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: $grey-fonce;
+        padding-top: 96px;
+        padding: 80px 202px;
+
+        h2 {
+            font-size: $f-34;
+            font-weight: 800;
+            font-family: $titleFont;
+            margin-bottom: 55px;
+        }
+
+        .paragraphs {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+
+
+            .paragraph {
+                cursor: pointer;
+                background-color: $white-1;
+                border-radius: 16px;
+                padding: 24px 32px;
+                width: 506px;
+                margin: 12px;
+                border: 1px solid #E6E6E7;
+                transition: $transition;
+                &:hover {
+                    border: 1px solid #48495E;
+                }
+
+                h3 {
+                    font-size: $f-19;
+                    font-weight: 800;
+                    margin-bottom: 8px;
+                    font-family: $titleFont;
+                }
+
+                p {
+                    font-size: $f-16;
+                    line-height: 24px;
+                }
+
+            }
+        }
+    }
+
+    .blockBtn {
+        padding: 96px 202px;
+        padding-bottom: 103px;
+
+        .contain {
+            background-color: $grey-clair;
+            //background-image: url('../images/bg-propos.png');
+            background-position: center;
+            background-size: cover;
+            width: 100%;
+            height: 355px;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 69px;
+            padding-right: 157px;
+            padding-top: 64px;
+            padding-bottom: 89px;
+
+            .left {
+                max-width: 530px;
+
+                h2 {
+                    font-size: $f-34;
+                    line-height: 42px;
+                    font-weight: 800;
+                    margin-bottom: 20px;
+                    text-wrap: balanced;
+                    padding-right: 40px;
+                    font-family: $titleFont;
+                }
+
+                p {
+                    font-size: $f-18;
+                    line-height: 28px;
+                    padding-right: 70px;
+                }
+            }
+        }
+    }
+}
