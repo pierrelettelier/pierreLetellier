@@ -1,9 +1,8 @@
-// src/sanity.js
 import { createClient } from '@sanity/client'
 
 export const client = createClient({
-  projectId: '9hozoqmh',
-  dataset: 'production',
-  useCdn: true,
-  apiVersion: '2023-07-30',
+  projectId: '9hozoqmh',      // ton project ID
+  dataset: 'production',      // ton dataset
+  apiVersion: '2025-09-01',
+  useCdn: true,               // lecture publique
 })

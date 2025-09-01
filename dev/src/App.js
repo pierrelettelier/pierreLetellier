@@ -6,7 +6,6 @@ import { client } from './Sanity';
 import Propos from './pages/Propos';
 import Contact from './pages/Contact';
 import WorkPage from './pages/WorkPages';
-import LoadingSVG from './components/LoadingSVG'; // <- ton SVG animé
 
 // Fonction pour créer un slug d'URL friendly
 const slugify = (text) => {
@@ -51,28 +50,23 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!navbarData) return <div></div>;
+  if (!navbarData) return <div>En attente...</div>;
 
   const { logo, titleBlock, linksBlock, dualTitleBlock } = navbarData;
 
   return (
-    <>
-      {loading && <LoadingSVG />} {/* Affiche le loading au démarrage */}
-      {!loading && (
-        <Router>
-          <Navbar />
-
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<Propos />} />
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/home" element={<Propos />} />
             <Route path="/propos" element={<Propos />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/:slug" element={<WorkPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
-      )}
-    </>
+
   );
 }
 

@@ -53,7 +53,7 @@ const Contact = () => {
 
     // Envoi de l'email via EmailJS
   emailjs.send(
-  'service_athihoi',     // Service ID EXACT
+  'service_8cobayo',     // Service ID EXACT
   'template_zdhyqrk',      // Template ID EXACT
     {
         title: 'Contact Us',       // Correspond à {{title}} dans le template
