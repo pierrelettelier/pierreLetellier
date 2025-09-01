@@ -1,0 +1,34 @@
+.circular-container {
+  position: relative;
+  width: 200px;   // diamètre du cercle
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circular-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  animation: rotateCircle 4s linear infinite; // rotation continue
+
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 0 -90px;  // rayon du cercle
+    font-size: 14px;
+    font-weight: bold;
+    color: #2B2B2B;
+    white-space: pre;
+  }
+}
+
+@keyframes rotateCircle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,8 +1,8 @@
 // src/sanity.js
-import sanityClient from '@sanity/client'
+import { createClient } from '@sanity/client'
 
-export const client = sanityClient({
-  projectId: '9hozoqmh',   // 🔁 Remplace avec ton vrai ID
+export const client = createClient({
+  projectId: '9hozoqmh',
   dataset: 'production',
   useCdn: true,
   apiVersion: '2023-07-30',

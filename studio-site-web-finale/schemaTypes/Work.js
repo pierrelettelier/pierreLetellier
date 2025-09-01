@@ -1,3 +1,4 @@
+// ./schemas/work.js
 export default {
   name: 'work',
   title: 'Work',
@@ -9,36 +10,42 @@ export default {
       type: 'string'
     },
     {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96
+      }
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'text'
+    },
+    {
       name: 'mainImage',
       title: 'Image principale',
       type: 'image',
-      options: {
-        hotspot: true
-      }
+      options: { hotspot: true }
     },
     {
       name: 'image360',
       title: 'Image 360',
-     type: 'image',
-      options: {
-        hotspot: true
-      }
+      type: 'image',
+      options: { hotspot: true }
     },
     {
       name: 'glbFile',
       title: 'Fichier .glb/.glTF',
       type: 'file',
-      options: {
-        accept: '.glb,.gltf'
-      }
+      options: { accept: '.glb,.gltf' }
     },
     {
       name: 'surfaceImage',
       title: 'Image Surface',
       type: 'image',
-      options: {
-        hotspot: true
-      }
+      options: { hotspot: true }
     },
     {
       name: 'categories',
@@ -47,13 +54,14 @@ export default {
       of: [{ type: 'string' }],
       options: {
         list: [
-          { title: 'Visualisation 3D', value: 'visualisation3d' },
-          { title: 'Design Projects', value: 'designprojects' },
-          { title: 'Video Animation 360', value: 'videoanimation360' },
-          { title: 'Surfaces', value: 'surfaces' },
+          { title: 'Visualisation 3D', value: 'plan3damenage' },
+          { title: 'Perspective 3D', value: 'perspective3d' },
+          { title: 'Panorama 360', value: 'panorama360' },
+          { title: 'Animation 3D', value: 'animation3d' },
+           { title: 'Design Projects', value: 'designprojects' },
           { title: 'Home', value: 'home' }
         ],
-       layout: 'checkbox'
+        layout: 'checkbox'
       }
     }
   ]

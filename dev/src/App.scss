@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -10,23 +10,27 @@
 //,
 
 
-$titleFont: 'Montserrat Alternates', sans-serif;   
+$titleFont: 'Montserrat Alternates', sans-serif;
 
 
 //color
 $black: #03041B;
+$black-2: #323346;
 $white-1: #FFF;
 
 $blue-1: #171933;
 
 $grey-1 : #F4F4F5;
 $grey-clair: #F9F8F2;
-$grey-fonce:#F2EEE2;
+$grey-fonce: #F2EEE2;
+
+$grey-3: #E6E6E7;
 
 //font 
 $f-8: 0.5rem; // 8px
 $f-12: 0.75rem; // 12px
 $f-10: 0.625rem; // 10px
+$f-15: 0.9375rem; // 15px
 $f-16: 1rem; // 16px
 $f-18: 1.125rem; // 18px
 $f-19: 1.1875rem; // 19px
@@ -40,7 +44,7 @@ $linkHover: #48495E;
 
 $linkactive: #171933;
 
-$transition:.3s ease-in-out;
+$transition: .3s ease-in-out;
 
 
 ////////GENERAL STYLES////////
@@ -50,14 +54,19 @@ body {
     color: $black;
 }
 
-ul li{
+ul li {
     list-style: none;
 }
-a{
+
+a, button {
     text-decoration: none;
+    cursor: pointer;
 }
 
-.btnAction{
+
+
+
+.btnAction {
     background-color: $blue-1;
     color: $white-1;
     padding: 12px 20px;
@@ -67,140 +76,212 @@ a{
     border: none;
     border-radius: 16px;
     transition: $transition;
+    min-height: 48px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    svg{
+    min-height: 48px;
+
+    @media screen and (max-width: 700px) {
+        width: 100%;
+    }
+
+    svg {
         margin-left: 10px;
-        path{
+
+        path {
             fill: $white-1;
-             transition: $transition;
+            transition: $transition;
         }
     }
 
-    &:hover{
+    &:hover {
         background-color: $linkHover;
-        svg{
-            path{
+
+        svg {
+            path {
                 fill: $white-1;
             }
         }
     }
 }
 
-// Classe générique pour titres
-.text-style {
-  &--h1Default { // pour h1
-    font-size: $f-38;
-    font-weight: 800;
-  }
 
-    &--h1Alternates { // pour h1 alternates
+/// STYLES 
+/// 
+
+
+.h1-default {
     font-size: $f-38;
-    font-weight: 800;
+    line-height: 50px;
+    font-weight: 900;
+    color: $black;
+}
+
+.h1-alternate {
+    font-size: $f-38;
+    line-height: 100%;
+    font-weight: 900;
     font-family: $titleFont;
-  }
+    color: $black;
+}
 
-  &--title2 { // pour h2
+.h2-alternate {
     font-size: $f-34;
-    font-weight: 800;
+    line-height: 42px;
+    font-weight: 900;
     font-family: $titleFont;
-  }
+    color: $black;
+}
 
-  &--title3 { // pour h3
+.h3-alternate {
+    font-size: $f-19;
+    line-height: 100%;
+    font-weight: 900;
+    font-family: $titleFont;
+    color: $black;
+    text-transform: uppercase;
+}
+
+.h4-alternate {
     font-size: $f-18;
+    line-height: 24px;
     font-weight: 700;
     font-family: $titleFont;
-    margin-bottom: 8px;
-  }
+    color: $black;
+}
 
-  &--paragraph {
-    font-size: $f-16;
+.bodyL-regular {
+    font-size: $f-18;
+    line-height: 28px;
     font-weight: 400;
-    line-height: 24px;
-  }
+    color: $black;
+}
+
+.bodyM-bold {
+    font-size: $f-16;
+    line-height: 28px;
+    font-weight: 700;
+    color: $black;
+}
+
+.bodyM-medium {
+    font-size: $f-16;
+    line-height: 28px;
+    font-weight: 500;
+    color: $black;
+}
+
+.bodyM-regular {
+    font-size: $f-16;
+    line-height: 28px;
+    font-weight: 400;
+    color: $black;
+}
+
+.bodyM-regular-alternate {
+    font-size: $f-16;
+    line-height: 28px;
+    color: $black;
+    font-weight: 400;
+    font-family: $titleFont;
+}
+
+.bodyS-regular {
+    font-size: $f-15;
+    line-height: 23px;
+    color: $black;
+    font-weight: 400;
 }
 
 
-
-/// WORK ITEMS
+///
 /// 
-.work_items {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    margin-top: 56px;
-    margin-bottom: 72px;
+//
 
-    .row {
-        display: grid;
-        gap: 20px 32px;
+.blockBtn {
+    padding: 202px;
+    padding-top: 96px;
+    padding-bottom: 148px;
 
-        &.row-3 {
-            grid-template-columns: repeat(3, 1fr); // 3 colonnes égales (33.33% chacune)
-        }
-
-        &.row-2 {
-            grid-template-columns: calc((100% - 2 * 32px) / 3) auto;
-        }
+    @media screen and (max-width: 1060px) {
+        padding: 48px 20px 74px 20px;
     }
 
-    .work_item {
-        background: white;
-        border-radius: 8px;
-        height: 525px;
+    .contain {
         position: relative;
+        padding: 64px 157px 89px 69px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         overflow: hidden;
-        transition: .3s ease-in-out;
 
-        &:hover {
-            .overlay {
-                opacity: 1;
-            }
-            .img_work {
-                transform: scale(1.1);
-            }
-            h3 {
-                opacity: 1;
-            }
+        @media screen and (max-width: 1060px) {
+            flex-direction: column;
+            padding: 20px 20px 30px 20px;
+
         }
 
-        h3 {
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
-            margin: 16px;
-            z-index: 999;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        transition: .3s ease-in-out;
-            opacity: 0;
-        }
-
-        .img_work {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-            z-index: 100;
-        transition: .3s ease-in-out;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.303);
+        .left {
+            max-width: 50%;
             z-index: 200;
-            opacity: 0;
-            transition: .3s ease-in-out;
+
+            @media screen and (max-width: 1060px) {
+                max-width: 100%;
+
+            }
+
+            h2 {
+                margin-bottom: 20px;
+
+                @media screen and (max-width: 1060px) {
+                    margin-bottom: 8px;
+                    font-size: 25px;
+
+                }
+            }
+        }
+
+        .img-back {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            z-index: 10;
+
+            svg {
+                width: auto;
+                height: 100%;
+            }
+
+        }
+
+        .linkFirst {
+            margin-left: 92px;
+            z-index: 200;
+
+            @media screen and (max-width: 1060px) {
+                margin-left: 0px;
+                margin-top: 20px;
+                width: 100%;
+
+                .btnAction {
+
+                    @media screen and (max-width: 700px) {
+                        width: 100%;
+                    }
+                }
+
+
+
+
+
+            }
         }
     }
 }

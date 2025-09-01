@@ -1,146 +1,476 @@
-@import "../App.scss";
-
-
+@import '../App.scss';
 
 .Navbar {
-    padding: 35px 96px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 35px 96px;
+    position: relative;
+
+    @media screen and (max-width: 1060px) {
+        padding: 16px 20px;
+
+    }
+
+
+    .TitleBlock {
+        margin-left: 13px;
+
+        h1 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2B2B2B;
+            margin-bottom: 3px;
+        }
+
+        p {
+            font-size: 12px;
+            font-weight: 400;
+            color: #2B2B2B;
+        }
+    }
 
     .LogoNav {
         display: flex;
         align-items: center;
     }
 
-    .LogoImage {
-        border: 1px solid red;
-        width: 80px;
-        height: 80px;
-        margin-right: 12px;
-    }
-
-    .TitleBlock {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: $titleFont;
-        @media screen and (max-width: 1025px) {
-           display: none;
-            
-        }
-
-        h1 {
-            margin-bottom: 8px;
-            font-size: $f-16;
-            color: $blue-1;
-        }
-
-        p {
-            font-size: $f-8;
-            color: $blue-1;
-        }
-    }
-
     .LinksBlock {
+
         display: flex;
         align-items: center;
+        gap: 56px;
 
-        .LinkItems {
+        @media screen and (max-width: 1060px) {
+            display: none !important;
+
+        }
+
+
+        a.LinkItems, .dropdownToggle {
+            cursor: pointer;
             color: $linkInactive;
-            font-size: $f-16;
-            font-weight: 400;
-            font-family: $titleFont;
-            margin: 0 20px;
             transition: $transition;
+            font-size: $f-16;
+            ;
+            font-family: $titleFont;
+            font-weight: 500;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            text-wrap: nowrap;
 
+            svg {
+                margin-left: 9px;
+            }
 
+            .open {
+                rotate: 180deg !important;
+            }
+
+            .close {
+                rotate: 0deg;
+            }
 
             &:hover {
-                color: $linkHover;
-
+                color: #48495E;
             }
         }
 
-        .LinkWithDropdown {
-            position: relative;
-        }
+        .activeDrop{
+            color: $blue-1;
 
-        .DropdownMenu {
-            position: absolute;
-            padding: 20px;
-            z-index: 999;
-            left: -50%;
-
-            .DropdownList {
-                box-shadow: 0 4px 54px rgba(230, 230, 231, 0.84);
-                background-color: $white-1;
-                border-radius: $f-16;
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                .DropdownItem {
-                    font-size: $f-16;
-                    font-weight: 400;
-                    font-family: $titleFont;
-                    padding: $f-12 $f-16;
-                    text-wrap: nowrap;
-                    text-transform: uppercase;
-                    border-radius: $f-8;
-                    transition: $transition;
-                    &:hover{
-                        background-color: $grey-1;
-                        color: $linkactive;
-                    }
+            svg {
+                path {
+                    fill: $blue-1;
                 }
             }
+        }
+
+        a.LinkItems.active {
+            color: $blue-1;
+
+            svg {
+
+                path {
+                    fill: $blue-1;
+                }
+            }
+
         }
 
     }
 
     .langueBlock {
         display: flex;
+        gap: 32px;
 
-        h3 {
+        @media screen and (max-width: 1060px) {
+            display: none !important;
+
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            outline: none;
             color: $linkInactive;
-            font-size: $f-16;
-            font-weight: 400;
-            font-family: $titleFont;
-            margin: 0 16px;
             transition: $transition;
-            cursor: pointer;
+            font-size: $f-16;
+            ;
+            font-family: $titleFont;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
 
             &:hover {
                 color: $linkHover;
             }
         }
+
+    }
+
+    .buttonMobile {
+        display: none;
+
+        @media screen and (max-width: 1060px) {
+            display: flex !important;
+            align-items: center;
+        }
+
+        .mailBtn {
+            background-color: #171933;
+            border-radius: 12px;
+            width: 46px;
+            height: 38px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+
+            &:hover {
+                background-color: #48495E;
+            }
+        }
+
+        .Menu {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+        }
+
+    }
+
+
+    .DropdownMenu {
+        position: absolute;
+        z-index: 999;
+        left: 0px;
+        top: 120px;
+        width: 100%;
+
+        .overlay {
+            background-color: #00000085;
+            backdrop-filter: blur(12px);
+            height: 100vh;
+
+            .DropdownContent {
+                border-top: 1px solid #E6E6E7;
+                display: flex;
+                justify-content: space-between;
+                background-color: #fff;
+
+                .DropdownList {
+                    padding: 20px 33px 24px 96px;
+
+                    h2 {
+                        font-size: $f-16;
+                        font-weight: 500;
+                        margin-bottom: 24px;
+                        color: $black;
+                    }
+
+                    .DropdownItemsWrapper {
+                        display: flex;
+                        align-items: center;
+                        gap: 28px;
+
+                    }
+
+                    .DropdownItem {
+
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        padding: 12px;
+
+
+                        align-items: flex-end;
+                        justify-content: center;
+
+
+                        p {
+                            z-index: 99;
+                            color: $linkInactive;
+                            transition: $transition;
+                            font-size: $f-16;
+                            ;
+                            font-family: $titleFont;
+                            font-weight: 500;
+                            text-transform: uppercase;
+                            display: flex;
+                            align-items: center;
+                            padding: 10px 15px;
+                            width: 100%;
+                            background-color: #ffffffc2;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 9px;
+                        }
+                    }
+
+                    .active {
+                        p {
+                            color: #48495E;
+                        }
+                    }
+
+                    .DropdownItemElement {
+                        width: 222px;
+                        height: 213px;
+                        overflow: hidden;
+                        border-radius: 28px;
+                        position: relative;
+                        z-index: 999;
+
+                        @media screen and (max-width: 1260px) {
+                            width: 180px;
+                            height: 190px;
+                        }
+
+                        @media screen and (max-width: 1100px) {
+                            width: 150px;
+                            height: 160px;
+                        }
+
+                        &:hover {
+                        
+                            p {
+                                color: #48495E;
+                            }
+                        }
+
+                        img {
+                            transition: all 0.5s ease;
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            transform: scale(1.2);
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    .DropdownList2 {
+        background-color: $grey-clair;
+        width: 340px;
+        padding: 24px 32px;
+        display: flex;
+        align-items: flex-start;
+        position: relative;
+        overflow: hidden;
+
+        >svg {
+            position: absolute;
+            width: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+
+        span {
+            padding: 4px 12px;
+            background-color: $grey-fonce;
+            border-radius: 10px;
+            color: $black;
+            transform: rotate(-2deg);
+            z-index: 999;
+
+        }
+
+        p {
+            border-radius: 9px;
+            margin-top: 28px;
+            color: $linkInactive;
+            transition: $transition;
+            font-size: $f-16;
+            ;
+            font-family: $titleFont;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #ffffffcb;
+            transition: $transition;
+            z-index: 999;
+
+            &:hover {
+                color: $black;
+
+                svg {
+                    path {
+                        fill: $black;
+                    }
+                }
+            }
+
+            svg {
+
+                margin-left: 10px;
+            }
+        }
     }
 }
 
-.active {
-    color: $linkactive;
+li.DropdownItemElement {
+    z-index: 999;
 }
 
-.inactive {
-    color: $linkInactive;
-}
 
-.DropdownIcon{
-    margin-left: 12px;
-    svg{
-    $transition: $transition;
+.mobileDropdown {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: $white-1;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+
+    .contentClose {
+        background-color: $white-1;
+        height: 64px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+    }
+
+    .content {
+        width: 100%;
+        height: 100%;
+        background-color: $grey-fonce;
+
+        >ul {
+            padding: 24px 16px;
+
+            .mobileMenuItem {
+                padding-bottom: 24px;
+                border-bottom: 1px solid $grey-clair;
+                margin-bottom: 24px;
+
+                .mobileMenuLink {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    svg.arrow.open{
+                        path{
+                        fill: $black;
+                        }
+                        rotate: -180deg;
+                    }
+                    a {
+                        color: $linkInactive;
+                        transition: $transition;
+                        font-size: $f-16;
+                        ;
+                        font-family: $titleFont;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        display: flex;
+                        align-items: center;
+
+                    }
+
+                }
+            }
+            .mobileSubmenu{
+                h3{
+                    color: #48495E;
+                    font-weight: 400;
+                    font-size: $f-15;
+                    line-height: 23px;
+                    margin-top: 24px;
+                    margin-bottom: 16px;
+                }
+                li{
+                    margin-bottom: 24px;
+                    a{
+                        color: $linkInactive;
+                        transition: $transition;
+                        font-size: $f-16;
+                        ;
+                        font-family: $titleFont;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                    }
+                      
+                  
+                }
+            }
+        }
+
     }
 }
 
-svg.DropdownIcon.open{
-    transform: rotate(180deg);
-    path{
-    fill: $linkHover !important;
+.langueBlock2 {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+
+        button {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: $linkInactive;
+            transition: $transition;
+            font-size: $f-16;
+            ;
+            font-family: $titleFont;
+            font-weight: 500;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: $linkHover;
+            }
+        }
+
     }
 
+.Navbar .langueBlock .selected {
+    color: $blue-1;
 }

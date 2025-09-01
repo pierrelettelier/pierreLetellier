@@ -24,6 +24,43 @@ export default {
       title: 'Texte du bouton principal',
     },
     {
+      name: 'carousel',
+      type: 'object',
+      title: 'Carrousel automatique',
+      fields: [
+        {
+          name: 'images',
+          type: 'array',
+          title: 'Images du carrousel',
+          of: [
+            {
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Texte alternatif (SEO/Accessibilité)',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'autoplay',
+          type: 'boolean',
+          title: 'Lecture automatique',
+          initialValue: true,
+        },
+        {
+          name: 'interval',
+          type: 'number',
+          title: 'Intervalle entre les slides (ms)',
+          initialValue: 3000,
+        },
+      ],
+    },
+    {
       name: 'block13',
       type: 'object',
       title: 'Bloc avec 1 titre + 3 paragraphes',

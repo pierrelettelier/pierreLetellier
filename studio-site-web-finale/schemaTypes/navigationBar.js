@@ -42,7 +42,16 @@ export default {
                   name: 'dropdownItem',
                   title: 'Élément du dropdown',
                   fields: [
-                    { name: 'label', title: 'Nom du lien', type: 'string' },
+                    { name: 'label', title: 'Nom du lien des items', type: 'string' },
+                    {
+                      name: 'image',
+                      title: 'Image',
+                      type: 'image',
+                      description: 'Image associée à cet élément du dropdown',
+                      options: {
+                        hotspot: true,
+                      },
+                    },
                   ],
                 },
               ],
