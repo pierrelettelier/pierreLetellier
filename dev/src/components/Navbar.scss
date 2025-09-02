@@ -18,7 +18,7 @@
 
         h1 {
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 800;
             color: #2B2B2B;
             margin-bottom: 3px;
         }
@@ -33,6 +33,13 @@
     .LogoNav {
         display: flex;
         align-items: center;
+
+        @media screen and (max-width: 1060px) {
+          .LogoImage{
+            max-width: 176px;
+          }
+
+        }
     }
 
     .LinksBlock {
@@ -198,7 +205,7 @@
                     .DropdownItemsWrapper {
                         display: flex;
                         align-items: center;
-                        gap: 28px;
+                        gap: 32px;
 
                     }
 
@@ -283,6 +290,7 @@
     }
 
     .DropdownList2 {
+        display: none !important;
         background-color: $grey-clair;
         width: 340px;
         padding: 24px 32px;
@@ -386,14 +394,20 @@ li.DropdownItemElement {
             padding: 24px 16px;
 
             .mobileMenuItem {
-                padding-bottom: 24px;
+                margin-top: 24px;
                 border-bottom: 1px solid $grey-clair;
                 margin-bottom: 24px;
+
+                
 
                 .mobileMenuLink {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+
+                    .mobileLink {
+                            margin-bottom: 0px;
+                        }
 
                     svg.arrow.open{
                         path{
@@ -417,6 +431,8 @@ li.DropdownItemElement {
                 }
             }
             .mobileSubmenu{
+                margin-bottom: 24px;
+                margin-top: 16px;
                 h3{
                     color: #48495E;
                     font-weight: 400;
@@ -473,4 +489,46 @@ li.DropdownItemElement {
 
 .Navbar .langueBlock .selected {
     color: $blue-1;
+}
+
+.mobileLink {
+    font-family: $titleFont;
+    margin-bottom: 24px;
+}
+
+.mobileDropdown .content > ul .mobileMenuItem .mobileMenuLink{
+    margin-bottom: 24px;
+}
+
+.mobileSubmenu{
+    .active{
+        color: $linkactive !important;
+    }
+}
+
+a.mobileLink.active{
+     color: $linkactive !important;
+}
+
+
+.Navbar{
+    .LogoNav, .langueBlock{
+        width: 20%;
+    }
+    .LogoNav{
+         @media screen and (max-width: 1060px) {
+        width: 180px;
+
+        }
+    }
+    .LinksBlock{
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .langueBlock{
+        display: flex;
+        justify-content: flex-end;
+    }
 }

@@ -106,9 +106,34 @@ export default function WorkPage() {
       {/* 🔥 HEADER */}
       {headerData && (
         <header className="header-title">
-          <h1 className='h1-alternate  '>{headerData.mainTitle}
-            <div class="wave2"></div>
-          </h1>
+        <h1 className="h1-alternate">
+  {(() => {
+    if (!headerData.mainTitle) return null;
+
+    // Sépare en mots
+    const words = headerData.mainTitle.trim().split(" ");
+    const lastWord = words.pop(); // retire et récupère le dernier mot
+    const firstPart = words.join(" "); // tout sauf le dernier mot
+
+    return (
+      <>
+        <div className='wavy2'>
+          <span>
+            {firstPart}
+          </span>
+                 <svg height="15" viewBox="0 0 191 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 4.64843C0 3.11703 1.1825 1.86162 2.71298 1.80864C13.8868 1.42186 57.5449 0 95.5 0C133.455 0 177.113 1.42186 188.287 1.80864C189.818 1.86162 191 3.11703 191 4.64843V12.0499C191 13.6619 189.695 14.9541 188.084 14.9001C176.377 14.508 131.689 13.0952 95.5 13.0952C59.3114 13.0952 14.6228 14.508 2.91631 14.9001C1.30519 14.9541 0 13.6619 0 12.0499V4.64843Z" fill="#EAE5C8"/>
+</svg>
+
+          </div> <span className="highlight">{lastWord}</span>
+
+
+        <div className="wave3"></div>
+      </>
+    );
+  })()}
+</h1>
+
 
           <div className='content'>
             <div className='left'>
@@ -134,18 +159,29 @@ export default function WorkPage() {
             {headerData.richBlock?.richTitle && headerData.richBlock.richTitle.length > 0 && (
               <div className='right'>
                 {headerData.richBlock.richTitle.map((block, i) => (
-                  <h2 key={i}>
-                    {block.children?.map((child, j) => (
-                      <span
-                        key={j}
+<h2 key={i}>
+  {block.children?.map((child, j) => {
+    const words = child.text.trim().split(" ");
+    const lastWord = words.pop(); // récupère le dernier mot
+    const firstPart = words.join(" "); // tout sauf le dernier mot
 
-                      >
-                        {child.text}
-                        <div class="wave"></div>
+    return (
+      <span key={j}>
+        {firstPart && <span>{firstPart} </span>} 
+        {lastWord && <span className="last-word">
+          <span className='word'> {lastWord}</span>
+<svg width="155" height="17" viewBox="0 0 155 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M153.942 2.69323C153.919 1.62214 153.063 0.759506 151.991 0.738804C143.451 0.573742 107.831 -0.0357487 76.9322 0.611497C46.033 1.25874 10.4701 3.35929 1.94414 3.88185C0.874831 3.94738 0.055028 4.84514 0.0774641 5.91622L0.249647 14.1362C0.273457 15.2728 1.22476 16.1624 2.35963 16.0944C11.3261 15.5567 47.7372 13.4479 77.1881 12.831C106.639 12.2141 143.107 12.7963 152.088 12.958C153.224 12.9785 154.138 12.0498 154.114 10.9132L153.942 2.69323Z" fill="white"/>
+</svg>
 
-                      </span>
-                    ))}
-                  </h2>
+
+          </span>}
+    
+      </span>
+    );
+  })}
+</h2>
+
                 ))}
                 {/* Description riche */}
                 {headerData.richBlock?.richDescription && (

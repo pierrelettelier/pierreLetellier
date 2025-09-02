@@ -58,7 +58,8 @@ ul li {
     list-style: none;
 }
 
-a, button {
+a,
+button {
     text-decoration: none;
     cursor: pointer;
 }
@@ -117,6 +118,10 @@ a, button {
     line-height: 50px;
     font-weight: 900;
     color: $black;
+       @media screen and (max-width: 1060px) {
+                   font-size: 28px;
+                   line-height: 36px;
+                }
 }
 
 .h1-alternate {
@@ -125,6 +130,10 @@ a, button {
     font-weight: 900;
     font-family: $titleFont;
     color: $black;
+     @media screen and (max-width: 1060px) {
+                   font-size: 28px;
+                            line-height: 36px;
+                }
 }
 
 .h2-alternate {
@@ -133,6 +142,10 @@ a, button {
     font-weight: 900;
     font-family: $titleFont;
     color: $black;
+      @media screen and (max-width: 1060px) {
+                   font-size: 25px;
+                   line-height: 34px;
+                }
 }
 
 .h3-alternate {
@@ -142,6 +155,10 @@ a, button {
     font-family: $titleFont;
     color: $black;
     text-transform: uppercase;
+     @media screen and (max-width: 1060px) {
+                   font-size: 18px;
+                   line-height: 100%;
+                }
 }
 
 .h4-alternate {
@@ -150,6 +167,10 @@ a, button {
     font-weight: 700;
     font-family: $titleFont;
     color: $black;
+        @media screen and (max-width: 1060px) {
+                   font-size: 18px;
+                   line-height: 23px;
+                }
 }
 
 .bodyL-regular {
@@ -224,11 +245,28 @@ a, button {
         }
 
         .left {
-            max-width: 50%;
+                max-width: 52%;
             z-index: 200;
 
             @media screen and (max-width: 1060px) {
                 max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 0px 50px;
+
+            }
+
+            @media screen and (max-width: 700px) {
+
+
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 0px 0px;
+                padding-right: 83px;
 
             }
 
@@ -238,6 +276,14 @@ a, button {
                 @media screen and (max-width: 1060px) {
                     margin-bottom: 8px;
                     font-size: 25px;
+                    text-align: center;
+
+                }
+
+                @media screen and (max-width: 700px) {
+                    padding-right: 0px;
+
+                    text-align: start;
 
                 }
             }
@@ -254,9 +300,20 @@ a, button {
             justify-content: flex-end;
             z-index: 10;
 
+            @media screen and (max-width: 1060px) {
+                right: -20px;
+                top: 80px;
+
+                svg {
+                    width: 120%;
+                }
+
+            }
+
             svg {
                 width: auto;
                 height: 100%;
+
             }
 
         }
@@ -266,8 +323,14 @@ a, button {
             z-index: 200;
 
             @media screen and (max-width: 1060px) {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            @media screen and (max-width: 1060px) {
                 margin-left: 0px;
-                margin-top: 20px;
+                margin-top: 24px;
                 width: 100%;
 
                 .btnAction {

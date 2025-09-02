@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { client } from '../Sanity'; // Adapte ce chemin si besoin
 import './Apropos.scss'; // Assure-toi que le fichier SCSS est bien importé
 
@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import imageUrlBuilder from '@sanity/image-url'
+
+import { LanguageContext } from '../LanguageContext'
 
 const builder = imageUrlBuilder(client)
 export function urlFor(source) {
@@ -18,63 +20,67 @@ const Propos = () => {
   const [isTransitioning, setIsTransitioning] = useState(true);
   const trackRef = useRef(null);
 
-  useEffect(() => {
+    const { language } = useContext(LanguageContext)
+
+ useEffect(() => {
+    const docType = language === 'ENG' ? 'About-ENG' : 'About'
     client
-      .fetch(`*[_type == "About"][0]`)
-      .then((data) => setProposData(data))
-      .catch(console.error);
-  }, []);
+      .fetch(`*[_type == "${docType}"][0]`)
+      .then(data => setProposData(data))
+      .catch(console.error)
+  }, [language])
+
 
   const images = proposData?.carousel?.images || [];
   const visible = 5;
 
- // 🔁 Carrousel en boucle infinie avec modulo
-// 🔁 Autoplay en boucle infinie, slide par slide
-useEffect(() => {
-  if (images.length === 0) return;
+  // 🔁 Carrousel en boucle infinie avec modulo
+  // 🔁 Autoplay en boucle infinie, slide par slide
+  useEffect(() => {
+    if (images.length === 0) return;
 
-  let visibleSlides = window.innerWidth <= 1060 ? 3 : 5; // nombre d'éléments visibles
-  let position = 0;
-  const track = trackRef.current;
+    let visibleSlides = window.innerWidth <= 1060 ? 3 : 5; // nombre d'éléments visibles
+    let position = 0;
+    const track = trackRef.current;
 
-  // recalculer slideWidth si l'utilisateur redimensionne
-  const getSlideWidth = () => track.querySelector("img")?.offsetWidth + 28 || 0;
+    // recalculer slideWidth si l'utilisateur redimensionne
+    const getSlideWidth = () => track.querySelector("img")?.offsetWidth + 28 || 0;
 
-  let slideWidth = getSlideWidth();
-  let animationFrame;
+    let slideWidth = getSlideWidth();
+    let animationFrame;
 
-  const animate = () => {
-    position -= 1; // vitesse du défilement en px/frame
-    if (Math.abs(position) >= track.scrollWidth / 2) {
-      position = 0; // reset pour boucle infinie
-    }
-    track.style.transform = `translateX(${position}px)`;
-    animationFrame = requestAnimationFrame(animate);
-  };
+    const animate = () => {
+      position -= 1; // vitesse du défilement en px/frame
+      if (Math.abs(position) >= track.scrollWidth / 2) {
+        position = 0; // reset pour boucle infinie
+      }
+      track.style.transform = `translateX(${position}px)`;
+      animationFrame = requestAnimationFrame(animate);
+    };
 
-  animate();
+    animate();
 
-  const handleResize = () => {
-    visibleSlides = window.innerWidth <= 1060 ? 3 : 5;
-    slideWidth = getSlideWidth();
-  };
+    const handleResize = () => {
+      visibleSlides = window.innerWidth <= 1060 ? 3 : 5;
+      slideWidth = getSlideWidth();
+    };
 
-  window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-  return () => {
-    cancelAnimationFrame(animationFrame);
-    window.removeEventListener("resize", handleResize);
-  };
-}, [images]);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [images]);
 
-const slugify = (text) =>
-  text
-    .toString()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, '')
-    .replace(/[^\w-]+/g, '');
+  const slugify = (text) =>
+    text
+      .toString()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '')
+      .replace(/[^\w-]+/g, '');
 
 
   if (!proposData) return <div></div>;
@@ -84,10 +90,26 @@ const slugify = (text) =>
     <div className="about-container">
       {/* Bloc principal */}
       <section className="main-section">
-        <div className='title'>
-          <h1 className='h1-default'>{proposData.title}</h1>
-          <h2 className='h1-alternate'>{proposData.sousTitre}</h2>
+        <div className="title">
+          <h1 className="h1-default">
+            {proposData.title}
+            <span className="h1-alternate elementRotate">
+              {proposData.sousTitre}
+              <svg
+                height="24"
+                viewBox="0 0 143 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.223313 9.8016C0.149965 7.70119 1.71183 5.90431 3.80343 5.6986C14.1849 4.67757 44.5108 1.85239 71.1317 0.922766C97.7525 -0.00685398 128.202 0.696023 138.629 0.990388C140.73 1.04969 142.413 2.73324 142.487 4.83365L142.847 15.152C142.928 17.4649 141.053 19.3663 138.739 19.306C127.638 19.0167 96.9192 18.3668 71.7715 19.2449C46.6237 20.1231 16.0253 22.9143 4.97089 23.9773C2.66728 24.1989 0.664405 22.4328 0.58364 20.12L0.223313 9.8016Z"
+                  fill="#EAE5C8"
+                />
+              </svg>
+            </span>
+          </h1>
         </div>
+
 
         <p className='bodyL-regular'>{proposData.description}</p>
         <Link to="/contact">
@@ -102,20 +124,20 @@ const slugify = (text) =>
       </section>
 
       {/* Carrousel */}
- <div className="carousselBlock">
-  {images.length > 0 && (
-    <div className="carousel-container" ref={trackRef}>
-      {images.concat(images.slice(0, visible)).map((img, index) => (
-        <img
-          key={index}
-          src={urlFor(img).url()}
-          alt={img.alt || `Slide ${index}`}
-          className="carousel-image"
-        />
-      ))}
-    </div>
-  )}
-</div>
+      <div className="carousselBlock">
+        {images.length > 0 && (
+          <div className="carousel-container" ref={trackRef}>
+            {images.concat(images.slice(0, visible)).map((img, index) => (
+              <img
+                key={index}
+                src={urlFor(img).url()}
+                alt={img.alt || `Slide ${index}`}
+                className="carousel-image"
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Bloc 13 */}
       <section className="block13">
@@ -134,23 +156,23 @@ const slugify = (text) =>
 
 
 
-  <section className="block14">
-  <h2 className='h2-alternate'>{proposData.block14?.title}</h2>
+      <section className="block14">
+        <h2 className='h2-alternate'>{proposData.block14?.title}</h2>
 
-  <div className='paragraphs'>
-    {proposData.block14?.paragraphs?.map((para, index) => (
-      <NavLink
-        to={`/${slugify(para.subtitle)}`}
-        key={index}
-        className="paragraph"
-        id={slugify(para.subtitle)} // <-- Chaque paragraphe a un ID unique
-      >
-        <h3 className='h3-alternate'>{para.subtitle}</h3>
-        <p className='bodyM-regular'>{para.text}</p>
-      </NavLink>
-    ))}
-  </div>
-</section>
+        <div className='paragraphs'>
+          {proposData.block14?.paragraphs?.map((para, index) => (
+            <NavLink
+              to={`/${slugify(para.subtitle)}`}
+              key={index}
+              className="paragraph"
+              id={slugify(para.subtitle)} // <-- Chaque paragraphe a un ID unique
+            >
+              <h3 className='h3-alternate'>{para.subtitle}</h3>
+              <p className='bodyM-regular'>{para.text}</p>
+            </NavLink>
+          ))}
+        </div>
+      </section>
 
       {/* Bloc avec bouton */}
       <section className="blockBtn">

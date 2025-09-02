@@ -36,13 +36,38 @@
 
             h1{
                 margin-bottom: 24px;
-                h2{
+                 @media screen and (max-width: 1060px) {
+                margin-bottom: 0px;
+                }
+                 @media screen and (max-width: 1060px) {
+                   padding-right: 80px;
+                }
+                span{
+                    display: inline-block;
                     text-transform: uppercase;
+                    transform: rotate(-1deg);
+                     margin-left: 12px;
+                position: relative;
+                 @media screen and (max-width: 1060px) {
+                     margin-left: 0px;
+                }
+
+                svg {
+                    position: absolute;
+                    bottom: -8px;
+                    right: -14px;
+                    z-index: -1;
+                max-width: 110%;
+                }
                 }
             }
             p:first-child{
                 margin-top: 24px;
                 margin-bottom: 16px;
+                   @media screen and (max-width: 1060px) {
+                margin-top: 16px;
+                }
+                
             }
         }
 

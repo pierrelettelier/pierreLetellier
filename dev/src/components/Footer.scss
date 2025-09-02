@@ -1,0 +1,13 @@
+@import "../App.scss";
+
+.Footer {
+  background-color: $black;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  h4{
+    color: white;
+    font-weight: 300;
+    font-size: 12px;
+  }
+}

@@ -1,12 +1,18 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
-const LanguageContext = createContext();
+export const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('FR'); // FR par défaut
+  const [language, setLanguage] = useState('FR');
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem('siteLanguage');
+    if (savedLang) setLanguage(savedLang);
+  }, []);
 
   const changeLanguage = (lang) => {
     setLanguage(lang);
+    localStorage.setItem('siteLanguage', lang);
   };
 
   return (
@@ -15,5 +21,3 @@ export const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   );
 };
-
-export const useLanguage = () => useContext(LanguageContext);

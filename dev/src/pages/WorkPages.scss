@@ -3,100 +3,163 @@
 
 .work-page {
 
-    padding: 29px 106px;
-    padding-bottom: 147px;
-     @media screen and (max-width: 1060px) {
-                  padding: 12px 20px;
-                  padding-bottom: 74px;
-                }
+  padding: 29px 106px;
+  padding-bottom: 147px;
 
-                .blockBtn{
-                  padding-left: 106px;
-                  padding-right: 106px;
-                    @media screen and (max-width: 1060px) {
-                     padding-left: 0px;
-                  padding-right: 0px;
-                }
-                  .contain{
-                    background-color: $grey-clair;
-                    border-radius: 32px;
-                  }
-                }
+  @media screen and (max-width: 1060px) {
+    padding: 12px 20px;
+    padding-bottom: 74px;
+  }
 
-                h1{
-                  position: relative;
-                  font-weight: 900 !important;
-                }
+  .blockBtn {
+    padding-left: 106px;
+    padding-right: 106px;
 
-
-    .header-title {
-        margin-bottom: 56px;
-          @media screen and (max-width: 1060px) {
-                         margin-bottom: 32px;
-                }
-
-        .content {
-            margin-top: 46px;
-            background-color: $grey-clair;
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            height: 100%;
-            padding: 32px;
-            border-radius: 32px;
-            @media screen and (max-width: 1060px) {
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                    padding: 32px 20px;
-                }
-
-        }
-        .left{
-            margin-right: 40px;
-              @media screen and (max-width: 1060px) {
-                    margin-right: 0px;
-                    padding: 0px 20px;
-                    margin-bottom: 24px;
-                }
-            p{
-                margin-bottom: 8px;
-          
-            }
-        }
-
-
-        .right {
-            background-color: $grey-fonce;
-            min-width: 420px;
-            height: 100%;
-            padding: 32px;
-            border-radius: 24px;
-             @media screen and (max-width: 1060px) {
-                   width: 100%;
-                   padding: 24px 20px;
-                }
-
-            display: flex;
-            flex-direction: column;
-                align-items: flex-start;
-            h2{
-                      position: relative;
-                          z-index: 200;
-            }
-
-            h2 span{
-                font-weight: 900 !important;
-                font-size: 22px !important;
-                font-family: $titleFont !important;
-                line-height: 30px !important;
-                           z-index: 200;
-            }
-            p{
-                margin-top: 10px;
-            }
-        }
+    @media screen and (max-width: 1060px) {
+      padding-left: 0px;
+      padding-right: 0px;
     }
+
+    .contain {
+      background-color: $grey-clair;
+      border-radius: 32px;
+    }
+  }
+
+  h1 {
+    position: relative;
+    font-weight: 900 !important;
+  }
+
+
+  .header-title {
+    margin-bottom: 56px;
+
+    @media screen and (max-width: 1060px) {
+      margin-bottom: 32px;
+    }
+
+    .wavy2 {
+      position: relative;
+
+      span {
+        display: inline-flex; // inline-flex si tu veux que ça prenne juste la largeur du texte
+        z-index: 10; // reste au-dessus si le svg est derrière
+        position: relative; // important pour que z-index s'applique
+
+      }
+
+      svg {
+        z-index: 1;
+        position: absolute;
+        bottom: -16px;
+        left: -2%;
+        width: 104%; // prend toute la largeur
+        height: 100%; // prend toute la hauteur
+        display: block;
+            @media screen and (max-width: 1060px) {
+              bottom: -10px;
+           }
+      }
+    }
+
+
+    h1 {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+
+      .highlight {
+        display: inline-block;
+        rotate: -2deg;
+        margin-left: 12px;
+      }
+
+      .wave3 {
+        background-color: #EAE5C8;
+        width: 10px;
+        height: 10px;
+        margin-left: 6px;
+        border-radius: 100%;
+        margin-bottom: 6px;
+      }
+    }
+
+    .content {
+      margin-top: 46px;
+      background-color: $grey-clair;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      height: 100%;
+      padding: 32px;
+      border-radius: 32px;
+
+      @media screen and (max-width: 1060px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+           margin-top: 24px;
+      }
+
+    }
+
+    .left {
+      margin-right: 40px;
+
+      @media screen and (max-width: 1060px) {
+        margin-right: 0px;
+        padding: 0px 4px;
+        margin-bottom: 24px;
+      }
+
+      p {
+        margin-bottom: 8px;
+
+      }
+    }
+
+
+    .right {
+      background-color: $grey-fonce;
+      min-width: 420px;
+      height: 100%;
+      padding: 32px;
+      border-radius: 24px;
+
+      @media screen and (max-width: 1060px) {
+        width: 100%;
+        padding: 24px 20px;
+        min-width: auto;
+      }
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      h2 {
+        position: relative;
+        z-index: 200;
+
+      @media screen and (max-width: 1060px) {
+        padding-right: 40px;
+      }
+      }
+
+      h2 span {
+        font-weight: 900 !important;
+        font-size: 22px !important;
+        font-family: $titleFont !important;
+        line-height: 30px !important;
+        z-index: 200;
+      }
+
+      p {
+        margin-top: 10px;
+      }
+    }
+  }
 }
 
 .work-list {
@@ -131,61 +194,58 @@
       }
     }
   }
-   @media screen and (max-width: 1060px) {
+
+  @media screen and (max-width: 1060px) {
     grid-template-columns: repeat(2, 1fr); // 2 colonnes
     gap: 24px;
 
     .work-item {
       &.A {
         grid-column: span 2; // A prend toute la largeur de la grille
-            height: 414px;
-    
+        height: 414px;
+
       }
 
       &.B {
         grid-column: span 2;
-              height: 251px;
+        height: 251px;
       }
     }
   }
 }
 
 .wave {
-    z-index: -1;
-width: 80px;
+  z-index: -1;
+  width: 80px;
   height: 18px;
   background-color: white;
   position: absolute;
-    bottom: 0px;
-    right: -8px;
+  bottom: 0px;
+  right: -8px;
   /* Clip-path correspondant au path SVG */
-  clip-path: polygon(
-    0.47% 35.01%, 1.01% 86.38%, 2.08% 86.81%, 10.47% 83.83%, 49.96% 79.24%, 
-    70.29% 78.73%, 97.63% 79.03%, 129.63% 80.31%, 138.68% 80.71%, 140.11% 79.4%, 
-    140.11% 68.15%, 139.91% 16.88%
-  );
+  clip-path: polygon(0.47% 35.01%, 1.01% 86.38%, 2.08% 86.81%, 10.47% 83.83%, 49.96% 79.24%,
+      70.29% 78.73%, 97.63% 79.03%, 129.63% 80.31%, 138.68% 80.71%, 140.11% 79.4%,
+      140.11% 68.15%, 139.91% 16.88%);
 }
 
 
 .wave2 {
-    z-index: -1;
-width: 254px;
+  z-index: -1;
+  width: 254px;
   height: 21px;
   background-color: #EAE5C8;
   position: absolute;
-    bottom: 0px;
-    left: -8px;
+  bottom: 0px;
+  left: -8px;
   /* Clip-path correspondant au path SVG */
-  clip-path: polygon(
-    0.47% 35.01%, 1.01% 86.38%, 2.08% 86.81%, 10.47% 83.83%, 49.96% 79.24%, 
-    70.29% 78.73%, 97.63% 79.03%, 129.63% 80.31%, 138.68% 80.71%, 140.11% 79.4%, 
-    140.11% 68.15%, 139.91% 16.88%
-  );
+  clip-path: polygon(0.47% 35.01%, 1.01% 86.38%, 2.08% 86.81%, 10.47% 83.83%, 49.96% 79.24%,
+      70.29% 78.73%, 97.63% 79.03%, 129.63% 80.31%, 138.68% 80.71%, 140.11% 79.4%,
+      140.11% 68.15%, 139.91% 16.88%);
 }
 
-.modal-overlay{
-    background-color: #00000085;
-            backdrop-filter: blur(12px);
+.modal-overlay {
+  background-color: #00000085;
+  backdrop-filter: blur(12px);
   position: fixed;
   top: 0;
   left: 0;
@@ -196,6 +256,7 @@ width: 254px;
   z-index: 1000;
   width: 100%;
   height: 100%;
+
   .modal-content {
     width: 90%;
     background-color: white;
@@ -206,7 +267,8 @@ width: 254px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .close-btn{
+
+    .close-btn {
       position: absolute;
       top: 16px;
       right: 16px;
@@ -224,4 +286,25 @@ width: 254px;
       font-size: 16px;
     }
   }
+}
+
+.last-word {
+  position: relative;
+
+  .word {
+    display: inline-flex; // inline-flex si tu veux que ça prenne juste la largeur du texte
+    z-index: 10; // reste au-dessus si le svg est derrière
+    position: relative; // important pour que z-index s'applique
+  }
+
+  svg {
+    z-index: 1;
+    position: absolute;
+    bottom: -8px;
+    left: -2%;
+    width: 110%; // prend toute la largeur
+    height: 30px;
+    display: block;
+  }
+
 }
