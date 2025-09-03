@@ -1,16 +1,19 @@
 // ./pages/WorkPage.jsx
-import React, { useEffect, useState , useRef} from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState , useRef, useContext} from 'react'
+import { useParams ,} from 'react-router-dom'
 import { client } from '../Sanity'
 import { Link } from 'react-router-dom';
 
 import * as PANOLENS from 'panolens'
 import * as THREE from 'three'
 
+import { LanguageContext } from '../LanguageContext'
+
 
 import './WorkPages.scss'
 
 export default function WorkPage() {
+    const { language } = useContext(LanguageContext)
   const { slug } = useParams() // slug = valeur de la catégorie
   const [workData, setWorkData] = useState([])
   const [headerData, setHeaderData] = useState(null)
@@ -23,50 +26,62 @@ export default function WorkPage() {
   const viewerRef = useRef(null)
 
   useEffect(() => {
-    if (!slug) return
+  if (!slug) return
 
-    setLoading(true)
+  setLoading(true)
 
-    const workQuery = `
-      *[_type == "work" && $slug in categories] | order(_createdAt desc){
-        title,
-        description,
-        "mainImage": mainImage.asset->url,
-        "image360": image360.asset->url,
-        "glbFile": glbFile.asset->url,
-        "surfaceImage": surfaceImage.asset->url,
-        categories
+  // Définir le docType selon la langue
+  const headerDocType = language === 'ENG' ? 'headerTitle-ENG' : 'headerTitle'
+
+  const workQuery = `
+    *[_type == "work" && $slug in categories] | order(_createdAt desc){
+      title,
+      description,
+      "mainImage": mainImage.asset->url,
+      "image360": image360.asset->url,
+      "glbFile": glbFile.asset->url,
+      "surfaceImage": surfaceImage.asset->url,
+      categories
+    }
+  `
+
+  const headerQuery = `
+    *[_type == "${headerDocType}" && $slug in categories][0]{
+      mainTitle,
+      richTitle2,
+      richBlock{
+        richTitle,
+        richDescription
       }
-    `
+    }
+  `
 
-    const headerQuery = `
-      *[_type == "headerTitle" && $slug in categories][0]{
-        mainTitle,
-        richTitle2,
-        richBlock{
-          richTitle,
-          richDescription
-        }
-      }
-    `
-
-    Promise.all([
-      client.fetch(workQuery, { slug }),
-      client.fetch(headerQuery, { slug }),
-    ]).then(([workRes, headerRes]) => {
+  Promise.all([
+    client.fetch(workQuery, { slug }),
+    client.fetch(headerQuery, { slug }),
+  ])
+    .then(([workRes, headerRes]) => {
       setWorkData(workRes)
       setHeaderData(headerRes)
       setLoading(false)
     })
-  }, [slug])
+    .catch((error) => {
+      console.error(error)
+      setLoading(false)
+    })
+}, [slug, language])
+
 
 
   useEffect(() => {
+     const docType = language === 'ENG' ? 'About-ENG' : 'About'
     client
-      .fetch(`*[_type == "About"][0]`)
+      .fetch(`*[_type == "${docType}"][0]`)
       .then((data) => setProposData(data))
       .catch(console.error);
-  }, []);
+  }, [language])
+
+  
 
   // 🔥 Fonction pour ouvrir modal si image360 ou glbFile
   const handleOpenModal = (work) => {
@@ -211,7 +226,10 @@ export default function WorkPage() {
                 onClick={() => handleOpenModal(work)}
                 style={{ cursor: work.image360 || work.glbFile ? 'pointer' : 'default' }}
               >
-                {work.mainImage && <img src={work.mainImage} alt={work.title} />}
+                {work.mainImage && <img 
+                onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+  draggable="false"  
+                src={work.mainImage} alt={work.title} />}
               </article>
             )
           })
@@ -229,6 +247,8 @@ export default function WorkPage() {
             {/* Visionneuse 360 */}
             {selectedWork.image360 && (
               <div
+              onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+  draggable="false"  
                 ref={panoContainerRef}
                 style={{ width: '100%', height: '500px' }}
               ></div>

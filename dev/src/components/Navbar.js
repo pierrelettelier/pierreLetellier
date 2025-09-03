@@ -20,8 +20,9 @@ export default function Navbar() {
 
   // Charger les données de Sanity avec asset->url pour avoir les liens directs des images
   useEffect(() => {
+        const docType = language === 'ENG' ? 'navigationBar-ENG' : 'navigationBar'
     client
-      .fetch(`*[_type == "navigationBar"][0]{
+      .fetch(`*[_type == "${docType}"][0]{
         logo{
           asset->{
             url
@@ -43,7 +44,7 @@ export default function Navbar() {
       }`)
       .then((data) => setNavbarData(data))
       .catch(console.error)
-  }, [])
+  }, [language])
 
   // Fermer le dropdown si on change d'URL
   useEffect(() => {
@@ -84,6 +85,8 @@ export default function Navbar() {
       <NavLink to='/' className='LogoNav'>
         {logo?.asset?.url && (
           <img
+          onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+  draggable="false"  
             src={logo.asset.url}
             alt="Logo"
             className='LogoImage'
@@ -155,6 +158,8 @@ export default function Navbar() {
                               >
                                 {item.image?.asset?.url && (
                                   <img
+                                  onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+                                    draggable="false"  
                                     src={item.image.asset.url}
                                     alt={item.label}
                                     className="DropdownImage"

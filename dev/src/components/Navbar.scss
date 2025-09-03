@@ -33,6 +33,9 @@
     .LogoNav {
         display: flex;
         align-items: center;
+         .LogoImage{
+            max-width: 232px;
+          }
 
         @media screen and (max-width: 1060px) {
           .LogoImage{

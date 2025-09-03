@@ -13,8 +13,8 @@ const formTexts = {
     objectiveLabel: 'Quel est l’objectif que vous souhaitez atteindre ?',
     objectivePlaceholder: 'Ex : Améliorer mes rendus 3D, créer un visuel, autres...',
     sendButton: 'Envoyer votre demande',
-    sending: 'Envoi...',
-    sent: 'Envoyé ✅',
+    sending: 'Envoyer votre demande',
+    sent: 'Envoyer votre demande',
   },
   ENG: {
     nameLabel: 'Introduce yourself briefly',
@@ -24,8 +24,8 @@ const formTexts = {
     objectiveLabel: 'What goal would you like to achieve?',
     objectivePlaceholder: 'Ex: Improve 3D renders, create a visual, others...',
     sendButton: 'Send your request',
-    sending: 'Sending...',
-    sent: 'Sent ✅',
+    sending: 'Send your request',
+    sent: 'Send your request',
   },
 }
 
@@ -38,6 +38,8 @@ const Contact = () => {
   const [statusMessage, setStatusMessage] = useState('')
   const [isSent, setIsSent] = useState(false)
 
+  const [congratData, setCongratData] = useState(null)
+
   useEffect(() => {
     const docType = language === 'ENG' ? 'Contact-ENG' : 'Contact'
     client
@@ -46,10 +48,22 @@ const Contact = () => {
       .catch(console.error)
   }, [language])
 
+  useEffect(() => {
+    const docType = language === 'ENG' ? 'congrat-ENG' : 'congrat'
+    client
+      .fetch(`*[_type == "${docType}"][0]`)
+      .then(data => setCongratData(data))
+      .catch(console.error)
+  }, [language])
+
+
   if (!contactData) return <div></div>
 
   const { blockIntro, blockContact } = contactData
   const texts = formTexts[language] // Texte du formulaire selon la langue
+
+  const { title: congratTitle, description: congratDescription } = congratData || {};
+
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -84,30 +98,30 @@ const Contact = () => {
       },
       'ZFczy3zMenSiOwwUQ'
     )
-    .then(() => {
-      setStatusMessage('✅ Email envoyé avec succès !')
-      setForm({ name: '', email: '', objective: '' })
-      setLoading(false)
-      setIsSent(true)
-    })
-    .catch((err) => {
-      console.error(err)
-      setStatusMessage('❌ Une erreur est survenue, réessayez.')
-      setLoading(false)
-    })
+      .then(() => {
+        setStatusMessage('✅ Email envoyé avec succès !')
+        setForm({ name: '', email: '', objective: '' })
+        setLoading(false)
+        setIsSent(true)
+      })
+      .catch((err) => {
+        console.error(err)
+        setStatusMessage('❌ Une erreur est survenue, réessayez.')
+        setLoading(false)
+      })
   }
 
   return (
     <div className='contact'>
       {/* Bloc Introductif */}
-      <section className='intro'>
+    <section className={`intro ${isSent ? 'inactive' : ''}`}>
         <div className='content'>
           <div className='left'>
             <h1 className='h1-default '>
               {blockIntro?.title}
               <span className="h1-alternate">{blockIntro?.subtitle}
                 <svg width="323" height="25" viewBox="0 0 323 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0.955055 10.3472C0.917336 8.18631 2.60208 6.3869 4.76099 6.28655C22.3624 5.46844 96.7347 2.1289 161.316 1.00162C225.898 -0.125655 300.342 0.616294 317.961 0.819626C320.122 0.844566 321.868 2.58409 321.906 4.745L322.087 15.0775C322.126 17.3328 320.305 19.1753 318.05 19.1514C299.682 18.9566 223.298 18.2558 161.636 19.3322C99.9742 20.4085 23.6616 23.7745 5.31202 24.6103C3.05874 24.7129 1.17478 22.935 1.13541 20.6797L0.955055 10.3472Z" fill="white"/>
+                  <path d="M0.955055 10.3472C0.917336 8.18631 2.60208 6.3869 4.76099 6.28655C22.3624 5.46844 96.7347 2.1289 161.316 1.00162C225.898 -0.125655 300.342 0.616294 317.961 0.819626C320.122 0.844566 321.868 2.58409 321.906 4.745L322.087 15.0775C322.126 17.3328 320.305 19.1753 318.05 19.1514C299.682 18.9566 223.298 18.2558 161.636 19.3322C99.9742 20.4085 23.6616 23.7745 5.31202 24.6103C3.05874 24.7129 1.17478 22.935 1.13541 20.6797L0.955055 10.3472Z" fill="white" />
                 </svg>
               </span>
             </h1>
@@ -180,6 +194,30 @@ const Contact = () => {
           </svg>
         </div>
       </section>
+
+{/* Section de félicitations */}
+  {isSent && congratData && (
+      <section className='congrat-section'>
+
+
+        <main>
+
+          <h2 className='h1-default'>
+            <span>{congratTitle}</span>
+            <svg width="158" height="23" viewBox="0 0 158 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.434353 8.7225C0.397503 6.6114 1.98646 4.83845 4.09193 4.67999C15.1729 3.846 49.0135 1.45112 78.6468 0.933865C108.28 0.416614 142.184 1.62902 153.287 2.07578C155.397 2.16067 157.047 3.87707 157.083 5.98818L157.264 16.3136C157.304 18.6179 155.396 20.4815 153.093 20.3934C141.271 19.941 106.995 18.7752 78.9668 19.2644C50.9384 19.7536 16.724 22.115 4.92488 22.9797C2.62645 23.1481 0.654805 21.3522 0.614584 19.0479L0.434353 8.7225Z" fill="white" />
+            </svg>
+
+          </h2>
+          <p className='bodyM-regular'>{congratDescription}</p>
+
+          <svg width="731" height="166" viewBox="0 0 731 166" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.95011 434.58C-2.27411 423.411 1.19779 409.348 11.9523 402.432C65.3316 368.103 221.697 268.674 363.26 189.787C504.823 110.901 671.643 30.2329 728.92 2.89844C740.46 -2.60875 754.246 1.83687 760.47 13.0063L791.047 67.8769C797.901 80.1759 793.024 95.6728 780.331 101.764C719.417 130.996 551.284 212.698 417.555 287.22C283.825 361.741 125.89 461.742 68.9835 498.166C57.1249 505.756 41.3806 501.75 34.527 489.451L3.95011 434.58Z" fill="#F9F8F2" />
+          </svg>
+        </main>
+
+      </section>
+       )}
 
       {/* Bloc Coordonnées */}
       <section className='contact-info'>

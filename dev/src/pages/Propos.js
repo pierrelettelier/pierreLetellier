@@ -9,10 +9,14 @@ import imageUrlBuilder from '@sanity/image-url'
 
 import { LanguageContext } from '../LanguageContext'
 
-const builder = imageUrlBuilder(client)
+const builder = imageUrlBuilder(client);
 export function urlFor(source) {
   return builder.image(source)
+    .width(800)       // Largeur max pour limiter le poids
+    .format('webp')   // Format optimisé
+    .quality(80);     // Compression
 }
+
 
 const Propos = () => {
   const [proposData, setProposData] = useState(null);
@@ -129,6 +133,8 @@ const Propos = () => {
           <div className="carousel-container" ref={trackRef}>
             {images.concat(images.slice(0, visible)).map((img, index) => (
               <img
+              onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+  draggable="false"  
                 key={index}
                 src={urlFor(img).url()}
                 alt={img.alt || `Slide ${index}`}

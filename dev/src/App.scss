@@ -4,8 +4,9 @@
     box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700;800;900&display=swap');
+
 
 //,
 
@@ -116,7 +117,7 @@ button {
 .h1-default {
     font-size: $f-38;
     line-height: 50px;
-    font-weight: 900;
+    font-weight: 800;
     color: $black;
        @media screen and (max-width: 1060px) {
                    font-size: 28px;
@@ -127,7 +128,7 @@ button {
 .h1-alternate {
     font-size: $f-38;
     line-height: 100%;
-    font-weight: 900;
+    font-weight: 800;
     font-family: $titleFont;
     color: $black;
      @media screen and (max-width: 1060px) {
@@ -139,7 +140,7 @@ button {
 .h2-alternate {
     font-size: $f-34;
     line-height: 42px;
-    font-weight: 900;
+    font-weight: 800;
     font-family: $titleFont;
     color: $black;
       @media screen and (max-width: 1060px) {
@@ -151,7 +152,7 @@ button {
 .h3-alternate {
     font-size: $f-19;
     line-height: 100%;
-    font-weight: 900;
+    font-weight: 800;
     font-family: $titleFont;
     color: $black;
     text-transform: uppercase;
@@ -183,7 +184,7 @@ button {
 .bodyM-bold {
     font-size: $f-16;
     line-height: 28px;
-    font-weight: 700;
+    font-weight: 600;
     color: $black;
 }
 
@@ -197,7 +198,7 @@ button {
 .bodyM-regular {
     font-size: $f-16;
     line-height: 28px;
-    font-weight: 400;
+    font-weight: 500;
     color: $black;
 }
 
@@ -224,7 +225,7 @@ button {
 .blockBtn {
     padding: 202px;
     padding-top: 96px;
-    padding-bottom: 148px;
+    padding-bottom: 88px;
 
     @media screen and (max-width: 1060px) {
         padding: 48px 20px 74px 20px;
