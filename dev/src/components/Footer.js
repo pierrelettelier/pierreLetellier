@@ -72,7 +72,11 @@ export default function Footer() {
 <section>
   <h2>Explore</h2>
   {linksBlock
-    ?.filter((link) => link.label?.toLowerCase() !== 'travaux') // <-- exclusion TRAVAUX
+    ?.filter((link) => {
+      const label = link.label?.toLowerCase() || '';
+      // Exclure tous les liens contenant ces mots
+      return !label.includes('travaux') && !label.includes('construction work');
+    })
     .map((link) => link.label && (
       <NavLink
         key={slugify(link.label)}

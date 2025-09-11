@@ -5,7 +5,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 35px 96px;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    background-color: #FFFFFF;
 
     @media screen and (max-width: 1060px) {
         padding: 16px 20px;
@@ -33,14 +36,15 @@
     .LogoNav {
         display: flex;
         align-items: center;
-         .LogoImage{
-            max-width: 232px;
-          }
+
+        .LogoImage {
+            max-width: 250px;
+        }
 
         @media screen and (max-width: 1060px) {
-          .LogoImage{
-            max-width: 176px;
-          }
+            .LogoImage {
+                max-width: 176px;
+            }
 
         }
     }
@@ -57,7 +61,8 @@
         }
 
 
-        a.LinkItems, .dropdownToggle {
+        a.LinkItems,
+        .dropdownToggle {
             cursor: pointer;
             color: $linkInactive;
             transition: $transition;
@@ -86,7 +91,7 @@
             }
         }
 
-        .activeDrop{
+        .activeDrop {
             color: $blue-1;
 
             svg {
@@ -202,7 +207,7 @@
                         font-size: $f-16;
                         font-weight: 500;
                         margin-bottom: 24px;
-                        color: $black;
+                        color: #323346;
                     }
 
                     .DropdownItemsWrapper {
@@ -255,7 +260,7 @@
                         width: 222px;
                         height: 213px;
                         overflow: hidden;
-                        border-radius: 28px;
+                        border-radius: 16px;
                         position: relative;
                         z-index: 999;
 
@@ -270,7 +275,7 @@
                         }
 
                         &:hover {
-                        
+
                             p {
                                 color: #48495E;
                             }
@@ -369,6 +374,20 @@ li.DropdownItemElement {
     height: 100vh;
     z-index: 9999;
 
+    .content {
+        position: relative;
+    }
+
+    .svgBack {
+        position: absolute;
+        top: 50%;
+        transform: translate(0%, -66%);
+        left: 0px;
+        z-index: 0;
+        width: 100%;
+        opacity: 0.6;
+    }
+
     .contentClose {
         background-color: $white-1;
         height: 64px;
@@ -395,13 +414,15 @@ li.DropdownItemElement {
 
         >ul {
             padding: 24px 16px;
+            z-index: 100;
+            position: relative;
 
             .mobileMenuItem {
                 margin-top: 24px;
                 border-bottom: 1px solid $grey-clair;
                 margin-bottom: 24px;
 
-                
+
 
                 .mobileMenuLink {
                     display: flex;
@@ -409,15 +430,17 @@ li.DropdownItemElement {
                     justify-content: space-between;
 
                     .mobileLink {
-                            margin-bottom: 0px;
+                        margin-bottom: 0px;
+                    }
+
+                    svg.arrow.open {
+                        path {
+                            fill: $black;
                         }
 
-                    svg.arrow.open{
-                        path{
-                        fill: $black;
-                        }
                         rotate: -180deg;
                     }
+
                     a {
                         color: $linkInactive;
                         transition: $transition;
@@ -433,10 +456,12 @@ li.DropdownItemElement {
 
                 }
             }
-            .mobileSubmenu{
+
+            .mobileSubmenu {
                 margin-bottom: 24px;
                 margin-top: 16px;
-                h3{
+
+                h3 {
                     color: #48495E;
                     font-weight: 400;
                     font-size: $f-15;
@@ -444,9 +469,11 @@ li.DropdownItemElement {
                     margin-top: 24px;
                     margin-bottom: 16px;
                 }
-                li{
+
+                li {
                     margin-bottom: 24px;
-                    a{
+
+                    a {
                         color: $linkInactive;
                         transition: $transition;
                         font-size: $f-16;
@@ -455,8 +482,8 @@ li.DropdownItemElement {
                         font-weight: 500;
                         text-transform: uppercase;
                     }
-                      
-                  
+
+
                 }
             }
         }
@@ -465,32 +492,36 @@ li.DropdownItemElement {
 }
 
 .langueBlock2 {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: $linkInactive;
+        transition: $transition;
+        font-size: $f-16;
+        ;
+        font-family: $titleFont;
+        font-weight: 500;
+        text-transform: uppercase;
         display: flex;
-        flex-direction: column;
-        gap: 14px;
+        align-items: center;
 
-        button {
-            background-color: transparent;
-            border: none;
-            outline: none;
-            color: $linkInactive;
-            transition: $transition;
-            font-size: $f-16;
-            ;
-            font-family: $titleFont;
-            font-weight: 500;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-
-            &:hover {
-                color: $linkHover;
-            }
+        &:hover {
+            color: $linkHover;
         }
-
     }
 
+}
+
 .Navbar .langueBlock .selected {
+    color: $blue-1;
+}
+
+.Navbar .langueBlock2 .selected {
     color: $blue-1;
 }
 
@@ -499,39 +530,61 @@ li.DropdownItemElement {
     margin-bottom: 24px;
 }
 
-.mobileDropdown .content > ul .mobileMenuItem .mobileMenuLink{
+.mobileDropdown .content>ul .mobileMenuItem .mobileMenuLink {
     margin-bottom: 24px;
 }
 
-.mobileSubmenu{
-    .active{
+.mobileSubmenu {
+    .active {
         color: $linkactive !important;
     }
 }
 
-a.mobileLink.active{
-     color: $linkactive !important;
+a.mobileLink.active {
+    color: $linkactive !important;
 }
 
 
-.Navbar{
-    .LogoNav, .langueBlock{
+.Navbar {
+
+    .LogoNav,
+    .langueBlock {
         width: 20%;
     }
-    .LogoNav{
-         @media screen and (max-width: 1060px) {
-        width: 180px;
+
+    .LogoNav {
+        @media screen and (max-width: 1060px) {
+            width: 180px;
 
         }
     }
-    .LinksBlock{
+
+    .LinksBlock {
         width: 60%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .langueBlock{
+
+    .langueBlock {
         display: flex;
         justify-content: flex-end;
+    }
+}
+
+.DropdownList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.nameItems {
+    display: flex;
+    flex-direction: column;
+
+    svg {
+        margin-left: -5px;
+        margin-top: 3px;
     }
 }

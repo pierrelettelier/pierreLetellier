@@ -26,80 +26,38 @@ const slugify = (text) => {
 
 // Composant Loading
 function Loading() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchAndPreloadImages() {
-      try {
-        // Récupère toutes les images depuis Sanity
-        const data = await client.fetch(`
-          *[_type == "sanity.imageAsset"]{
-            _id,
-            url
-          }
-        `);
-
-        const urls = data.map((img) => img.url);
-
-        // Précharger toutes les images
-        await Promise.all(
-          urls.map(
-            (src) =>
-              new Promise((resolve, reject) => {
-                const img = new Image();
-                img.src = src;
-                img.onload = resolve;
-                img.onerror = reject;
-              })
-          )
-        );
-
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erreur lors du chargement des images :", error);
-        setIsLoading(false);
-      }
-    }
-
-    fetchAndPreloadImages();
-  }, []);
-
-  if (isLoading) {
-    return (
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+      }}
+    >
+      <p>Chargement...</p>
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
+          border: "6px solid #f3f3f3",
+          borderTop: "6px solid #333",
+          borderRadius: "50%",
+          width: "50px",
+          height: "50px",
+          animation: "spin 1s linear infinite",
+          marginTop: "20px",
         }}
-      >
-        <p>Chargement...</p>
-        <div
-          style={{
-            border: "6px solid #f3f3f3",
-            borderTop: "6px solid #333",
-            borderRadius: "50%",
-            width: "50px",
-            height: "50px",
-            animation: "spin 1s linear infinite",
-            marginTop: "20px",
-          }}
-        />
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
-      </div>
-    );
-  }
-
-  return null; // Ne rien rendre une fois chargé
+      />
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </div>
+  );
 }
 
 // Composant 404
@@ -112,7 +70,7 @@ function NotFound() {
   );
 }
 
-// Fonction pour précharger des images précises
+// Fonction pour précharger des images
 const preloadImages = (imageUrls) => {
   return Promise.all(
     imageUrls.map(
@@ -129,51 +87,84 @@ const preloadImages = (imageUrls) => {
 
 function App() {
   const [navbarData, setNavbarData] = useState(null);
+  const [proposData, setProposData] = useState(null);
+  const [contactData, setContactData] = useState(null);
+  const [congratData, setCongratData] = useState(null);
+  const [workData, setWorkData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [language, setLanguage] = useState('FR'); // ou ENG selon logique
 
   useEffect(() => {
-    const hasVisited = localStorage.getItem('siteVisited');
-
-    const fetchNavbar = async () => {
+    async function fetchAll() {
       try {
-        const data = await client.fetch(`*[_type == "navigationBar"][0]`);
-        setNavbarData(data);
+        // 1️⃣ Fetch navbar
+        const navbar = await client.fetch(`*[_type == "navigationBar"][0]`);
+        setNavbarData(navbar);
 
-        const imageUrls = [];
-        if (data.logo?.asset?.url) imageUrls.push(data.logo.asset.url);
+        // 2️⃣ Fetch About
+        const aboutDocType = language === 'ENG' ? 'About-ENG' : 'About';
+        const about = await client.fetch(`*[_type == "${aboutDocType}"][0]`);
+        setProposData(about);
 
+        // 3️⃣ Fetch Contact
+        const contactDocType = language === 'ENG' ? 'Contact-ENG' : 'Contact';
+        const contact = await client.fetch(`*[_type == "${contactDocType}"][0]`);
+        setContactData(contact);
+
+        // 4️⃣ Fetch Congrat
+        const congratDocType = language === 'ENG' ? 'congrat-ENG' : 'congrat';
+        const congrat = await client.fetch(`*[_type == "${congratDocType}"][0]`);
+        setCongratData(congrat);
+
+        // 5️⃣ Fetch Work
+        const workQuery = `
+          *[_type == "work"] | order(_createdAt desc){
+            title,
+            description,
+            "mainImage": mainImage.asset->url,
+            "image360": image360.asset->url,
+            "glbFile": glbFile.asset->url,
+            "surfaceImage": surfaceImage.asset->url,
+            categories
+          }
+        `;
+        const works = await client.fetch(workQuery);
+        setWorkData(works);
+
+        // 6️⃣ Précharger toutes les images
+        const imageUrls = [
+          navbar.logo?.asset?.url,
+          about?.image?.asset?.url,
+          contact?.image?.asset?.url,
+          congrat?.image?.asset?.url,
+          ...works.flatMap(w => [w.mainImage, w.image360, w.surfaceImage].filter(Boolean))
+        ];
         await preloadImages(imageUrls);
+
+        // ✅ Tout est chargé
         setLoading(false);
-        localStorage.setItem('siteVisited', 'true');
       } catch (err) {
         console.error(err);
         setLoading(false);
       }
-    };
-
-    if (hasVisited) {
-      // Déjà visité : on charge directement
-      fetchNavbar();
-    } else {
-      // Première visite
-      fetchNavbar();
     }
-  }, []);
+
+    fetchAll();
+  }, [language]);
 
   if (loading) return <Loading />;
-
   if (!navbarData) return <div>Erreur lors du chargement</div>;
 
   return (
-    <LanguageProvider>
+    <LanguageProvider value={{ language, setLanguage }}>
       <Router>
-        <Navbar />
+        <Navbar data={navbarData} />
         <Routes>
-          <Route path="/" element={<Propos />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/mentions" element={<Mention />} />
-          <Route path="/:slug" element={<WorkPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Propos data={proposData} />} />
+          <Route path="/contact" element={<Contact data={contactData} />} />
+          <Route path="/mentions" element={<Mention />} />
+          <Route path="/:slug" element={<WorkPage data={workData} />} />
         </Routes>
         <Footer />
       </Router>

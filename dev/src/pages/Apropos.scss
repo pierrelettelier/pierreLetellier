@@ -3,6 +3,11 @@
 .about-container {
 
     overflow: hidden;
+    padding-top: 150px;
+
+    @media screen and (max-width: 700px) {
+        padding-top: 80px;
+    }
 
     .main-section {
         display: flex;
@@ -24,31 +29,34 @@
             display: flex;
             align-items: center;
             margin-bottom: 16px;
+         
 
-            h1{
-                 @media screen and (max-width: 700px) {
-           padding-right: 20px;
-        }
+            h1 {
+                @media screen and (max-width: 700px) {
+                    padding-right: 60px;
+                }
             }
 
-            .elementRotate{
+            .elementRotate {
                 display: inline-block; // Permet le transform
-            transform: rotate(-1deg);
+                transform: rotate(-1deg);
             }
 
-    
+
 
             span {
-                 margin-left: 14px;
+                margin-left: 14px;
                 rotate: -1deg;
                 position: relative;
 
+        
+
                 svg {
-                   position: absolute;
-    bottom: -8px;
-    left: -3%;
-    z-index: -1;
-    width: 110%;
+                    position: absolute;
+                    bottom: -8px;
+                    left: -3%;
+                    z-index: -1;
+                    width: 110%;
                 }
             }
         }
@@ -61,6 +69,7 @@
 
             @media screen and (max-width: 700px) {
                 text-align: start;
+                margin-bottom: 28px;
             }
         }
 
@@ -106,9 +115,19 @@
                 padding: 24px;
                 background-color: $grey-fonce;
                 border-radius: 24px;
+                 @media screen and (max-width: 700px) {
+                   padding: 20px;
+                    }
 
                 h3 {
                     margin-bottom: 8px;
+                    @media screen and (max-width: 700px) {
+                    margin-bottom: 6px;
+                    }
+                }
+
+                p {
+                    color: #323346;
                 }
             }
         }
@@ -125,8 +144,8 @@
         align-items: center;
         justify-content: center;
 
-         @media screen and (max-width: 1060px) {
-        padding: 48px 150px;
+        @media screen and (max-width: 1060px) {
+            padding: 48px 150px;
 
         }
 
@@ -136,16 +155,15 @@
             flex-direction: column;
             align-items: flex-start;
         }
-       
+
 
         h2 {
             margin-bottom: 48px;
-            font-weight: 900;
 
             @media screen and (max-width: 1060px) {
                 margin-bottom: 24px;
                 font-size: 25px;
-                max-width: 70%;
+                max-width: 80%;
                 line-height: 34px;
             }
         }
@@ -175,11 +193,13 @@
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
+                    padding: 20px 24px;
                 }
+
                 @media screen and (max-width: 700px) {
                     width: 100%;
                     min-height: auto;
-                        display: flex;
+                    display: flex;
                     flex-direction: column;
                     align-items: flex-start;
                     justify-content: flex-start;
@@ -193,13 +213,16 @@
                     margin-bottom: 7px;
                     text-transform: uppercase;
                 }
+
+                p {
+                    color: #323346;
+                }
             }
         }
     }
 }
 
 .carousselBlock {
-    padding: 20px;
     overflow: hidden;
 
     .carousel-container {

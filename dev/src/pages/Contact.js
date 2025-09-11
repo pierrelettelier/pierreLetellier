@@ -13,8 +13,13 @@ const formTexts = {
     objectiveLabel: 'Quel est l’objectif que vous souhaitez atteindre ?',
     objectivePlaceholder: 'Ex : Améliorer mes rendus 3D, créer un visuel, autres...',
     sendButton: 'Envoyer votre demande',
-    sending: 'Envoyer votre demande',
-    sent: 'Envoyer votre demande',
+    sending: 'Envoi en cours...',
+    sent: 'Envoyé !',
+    errors: {
+      name: 'Veuillez entrer votre nom',
+      email: 'Veuillez entrer une adresse email valide',
+      objective: 'Veuillez préciser votre objectif'
+    }
   },
   ENG: {
     nameLabel: 'Introduce yourself briefly',
@@ -24,9 +29,14 @@ const formTexts = {
     objectiveLabel: 'What goal would you like to achieve?',
     objectivePlaceholder: 'Ex: Improve 3D renders, create a visual, others...',
     sendButton: 'Send your request',
-    sending: 'Send your request',
-    sent: 'Send your request',
-  },
+    sending: 'Sending...',
+    sent: 'Sent!',
+    errors: {
+      name: 'Please enter your name',
+      email: 'Please enter a valid email address',
+      objective: 'Please specify your goal'
+    }
+  }
 }
 
 const Contact = () => {
@@ -37,7 +47,6 @@ const Contact = () => {
   const [loading, setLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
   const [isSent, setIsSent] = useState(false)
-
   const [congratData, setCongratData] = useState(null)
 
   useEffect(() => {
@@ -56,19 +65,21 @@ const Contact = () => {
       .catch(console.error)
   }, [language])
 
-
   if (!contactData) return <div></div>
 
   const { blockIntro, blockContact } = contactData
-  const texts = formTexts[language] // Texte du formulaire selon la langue
-
-  const { title: congratTitle, description: congratDescription } = congratData || {};
-
+  const texts = formTexts[language]
+  const { title: congratTitle, description: congratDescription } = congratData || {}
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
   }
 
   const handleSubmit = (e) => {
@@ -77,9 +88,9 @@ const Contact = () => {
     setLoading(true)
 
     const newErrors = {}
-    if (!form.name.trim()) newErrors.name = texts.nameLabel
-    if (!form.email.trim()) newErrors.email = texts.emailLabel
-    if (!form.objective.trim()) newErrors.objective = texts.objectiveLabel
+    if (!form.name.trim()) newErrors.name = texts.errors.name
+    if (!isValidEmail(form.email)) newErrors.email = texts.errors.email
+    if (!form.objective.trim()) newErrors.objective = texts.errors.objective
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -114,7 +125,7 @@ const Contact = () => {
   return (
     <div className='contact'>
       {/* Bloc Introductif */}
-    <section className={`intro ${isSent ? 'inactive' : ''}`}>
+      <section className={`intro ${isSent ? 'inactive' : ''}`}>
         <div className='content'>
           <div className='left'>
             <h1 className='h1-default '>
@@ -144,7 +155,7 @@ const Contact = () => {
                   placeholder={texts.namePlaceholder}
                   className={errors.name ? 'error' : ''}
                 />
-                {errors.name && <p>{errors.name}</p>}
+                {errors.name && <p className='error-message'>{errors.name}</p>}
               </div>
 
               <div className='form-group'>
@@ -158,7 +169,7 @@ const Contact = () => {
                   placeholder={texts.emailPlaceholder}
                   className={errors.email ? 'error' : ''}
                 />
-                {errors.email && <p>{errors.email}</p>}
+                {errors.email && <p className='error-message'>{errors.email}</p>}
               </div>
 
               <div className='form-group'>
@@ -172,7 +183,7 @@ const Contact = () => {
                   placeholder={texts.objectivePlaceholder}
                   className={errors.objective ? 'error' : ''}
                 />
-                {errors.objective && <p>{errors.objective}</p>}
+                {errors.objective && <p className='error-message'>{errors.objective}</p>}
               </div>
 
               <button
@@ -195,29 +206,20 @@ const Contact = () => {
         </div>
       </section>
 
-{/* Section de félicitations */}
-  {isSent && congratData && (
-      <section className='congrat-section'>
-
-
-        <main>
-
-          <h2 className='h1-default'>
-            <span>{congratTitle}</span>
-            <svg width="158" height="23" viewBox="0 0 158 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0.434353 8.7225C0.397503 6.6114 1.98646 4.83845 4.09193 4.67999C15.1729 3.846 49.0135 1.45112 78.6468 0.933865C108.28 0.416614 142.184 1.62902 153.287 2.07578C155.397 2.16067 157.047 3.87707 157.083 5.98818L157.264 16.3136C157.304 18.6179 155.396 20.4815 153.093 20.3934C141.271 19.941 106.995 18.7752 78.9668 19.2644C50.9384 19.7536 16.724 22.115 4.92488 22.9797C2.62645 23.1481 0.654805 21.3522 0.614584 19.0479L0.434353 8.7225Z" fill="white" />
-            </svg>
-
-          </h2>
-          <p className='bodyM-regular'>{congratDescription}</p>
-
-          <svg width="731" height="166" viewBox="0 0 731 166" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.95011 434.58C-2.27411 423.411 1.19779 409.348 11.9523 402.432C65.3316 368.103 221.697 268.674 363.26 189.787C504.823 110.901 671.643 30.2329 728.92 2.89844C740.46 -2.60875 754.246 1.83687 760.47 13.0063L791.047 67.8769C797.901 80.1759 793.024 95.6728 780.331 101.764C719.417 130.996 551.284 212.698 417.555 287.22C283.825 361.741 125.89 461.742 68.9835 498.166C57.1249 505.756 41.3806 501.75 34.527 489.451L3.95011 434.58Z" fill="#F9F8F2" />
-          </svg>
-        </main>
-
-      </section>
-       )}
+      {/* Section de félicitations */}
+      {isSent && congratData && (
+        <section className='congrat-section'>
+          <main>
+            <h2 className='h1-default'>
+              <span>{congratTitle}</span>
+              <svg width="158" height="23" viewBox="0 0 158 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.434353 8.7225C0.397503 6.6114 1.98646 4.83845 4.09193 4.67999C15.1729 3.846 49.0135 1.45112 78.6468 0.933865C108.28 0.416614 142.184 1.62902 153.287 2.07578C155.397 2.16067 157.047 3.87707 157.083 5.98818L157.264 16.3136C157.304 18.6179 155.396 20.4815 153.093 20.3934C141.271 19.941 106.995 18.7752 78.9668 19.2644C50.9384 19.7536 16.724 22.115 4.92488 22.9797C2.62645 23.1481 0.654805 21.3522 0.614584 19.0479L0.434353 8.7225Z" fill="white" />
+              </svg>
+            </h2>
+            <p className='bodyM-regular'>{congratDescription}</p>
+          </main>
+        </section>
+      )}
 
       {/* Bloc Coordonnées */}
       <section className='contact-info'>
@@ -225,7 +227,7 @@ const Contact = () => {
         <main>
           <p>
             <h3 className='h3-alternate'>{blockContact?.emailText}</h3>
-            <a className='bodyM-medium' href={`mailto:${blockContact?.emailLink}`}>
+            <a className='bodyM-medium' style={{fontSize: '17px'}} href={`mailto:${blockContact?.emailLink}`}>
               {blockContact?.emailLink}
             </a>
           </p>

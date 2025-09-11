@@ -16,11 +16,11 @@ export default function Navbar() {
   const [openMobileDropdownIndex, setOpenMobileDropdownIndex] = useState(null);
 
 
-    const { language, changeLanguage } = useContext(LanguageContext);
+  const { language, changeLanguage } = useContext(LanguageContext);
 
   // Charger les données de Sanity avec asset->url pour avoir les liens directs des images
   useEffect(() => {
-        const docType = language === 'ENG' ? 'navigationBar-ENG' : 'navigationBar'
+    const docType = language === 'ENG' ? 'navigationBar-ENG' : 'navigationBar'
     client
       .fetch(`*[_type == "${docType}"][0]{
         logo{
@@ -85,14 +85,14 @@ export default function Navbar() {
       <NavLink to='/' className='LogoNav'>
         {logo?.asset?.url && (
           <img
-          onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
-  draggable="false"  
+            onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+            draggable="false"
             src={logo.asset.url}
             alt="Logo"
             className='LogoImage'
           />
         )}
-      
+
       </NavLink>
 
       {/* Liens principaux */}
@@ -145,7 +145,11 @@ export default function Navbar() {
                   <div className='overlay'>
                     <div className='DropdownContent'>
                       <ul className='DropdownList'>
-                        <h2 className='nameItems'>Catégories</h2>
+                        <h2 className='nameItems'>Catégories
+                          <svg width="99" height="9" viewBox="0 0 99 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.108583 1.8099C0.119337 1.29648 0.518279 0.884375 1.03179 0.878738C5.85129 0.82584 29.0566 0.606069 49.1357 1.02667C69.2149 1.44726 92.3906 2.63858 97.2037 2.89325C97.7165 2.92039 98.0978 3.34884 98.0871 3.86226L97.999 8.06779C97.9877 8.60575 97.5506 9.02861 97.0133 9.00075C91.9729 8.73934 68.1738 7.53791 49.0078 7.13644C29.8417 6.73497 6.01317 6.93874 0.966296 6.98885C0.428252 6.99419 0.00922067 6.55339 0.0204892 6.01544L0.108583 1.8099Z" fill="#EAE5C8" />
+                          </svg>
+                        </h2>
                         <div className='DropdownItemsWrapper'>
 
                           {link.dropdown.slice(0, -1).map((item, i) => (
@@ -158,8 +162,8 @@ export default function Navbar() {
                               >
                                 {item.image?.asset?.url && (
                                   <img
-                                  onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
-                                    draggable="false"  
+                                    onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
+                                    draggable="false"
                                     src={item.image.asset.url}
                                     alt={item.label}
                                     className="DropdownImage"
@@ -216,18 +220,18 @@ export default function Navbar() {
 
       {dualTitleBlock && (
         <div className="langueBlock">
-           <button
-    className={language === 'FR' ? 'selected' : ''}
-    onClick={() => changeLanguage('FR')}
-  >
-    {dualTitleBlock.titleOne || 'FR'}
-  </button>
-  <button
-    className={language === 'ENG' ? 'selected' : ''}
-    onClick={() => changeLanguage('ENG')}
-  >
-    {dualTitleBlock.titleTwo || 'ENG'}
-  </button>
+          <button
+            className={language === 'FR' ? 'selected' : ''}
+            onClick={() => changeLanguage('FR')}
+          >
+            {dualTitleBlock.titleOne || 'FR'}
+          </button>
+          <button
+            className={language === 'ENG' ? 'selected' : ''}
+            onClick={() => changeLanguage('ENG')}
+          >
+            {dualTitleBlock.titleTwo || 'ENG'}
+          </button>
         </div>
       )}
       <div className='buttonMobile '>
@@ -248,103 +252,109 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-  <div className='mobileDropdown'>
-    <div className='contentClose'>
-      <button className='closeBtn' onClick={() => setIsMobileMenuOpen(false)}>
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M21.9595 8.62615C22.35 8.23562 22.983 8.23562 23.3735 8.62615C23.7641 9.01667 23.7641 9.64968 23.3735 10.0402L17.4139 15.9998L23.3735 21.9595L23.4426 22.035C23.763 22.4278 23.7397 23.0074 23.3735 23.3735C23.0074 23.7397 22.4278 23.763 22.035 23.4426L21.9595 23.3735L15.9998 17.4139L10.0402 23.3735C9.64968 23.7641 9.01667 23.7641 8.62615 23.3735C8.23562 22.983 8.23562 22.35 8.62615 21.9595L14.5858 15.9998L8.62615 10.0402C8.23562 9.64968 8.23562 9.01667 8.62615 8.62615C9.01667 8.23562 9.64968 8.23562 10.0402 8.62615L15.9998 14.5858L21.9595 8.62615Z"
-            fill="#171933"
-          />
-        </svg>
-      </button>
-    </div>
-
-    <div className='content'>
-      <ul>
-        {linksBlock?.map((link, index) => {
-          const hasDropdown = link.dropdown && link.dropdown.length > 0;
-          const childActive = isAnyChildActive(link);
-          const parentPath = `/${slugify(link.label)}`;
-          
-          const parentActive =
-            normalizePath(location.pathname) === normalizePath(parentPath);
-
-          return (
-            <li key={index} className="mobileMenuItem">
-              <div
-                className="mobileMenuLink"
-                onClick={() => {
-                  if (!hasDropdown) {
-                    setIsMobileMenuOpen(false);
-                  }
-                }}
+        <div className='mobileDropdown'>
+          <div className='contentClose'>
+            <button className='closeBtn' onClick={() => setIsMobileMenuOpen(false)}>
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                {hasDropdown ? (
-                  <span
-                    className={`mobileLink ${
-                      childActive || parentActive ? 'activeDrop' : ''
-                    }`}
-                  >
-                    {link.label}
-                  </span>
-                ) : (
-                  <NavLink
-                                      to={slugify(link.label) === 'home' ? '/' : `/${slugify(link.label)}`}
-                    className={({ isActive }) =>
-                      `mobileLink ${isActive ? 'active' : ''}`
-                    }
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </NavLink>
-                )}
-              </div>
-
-              {hasDropdown && (
-                <ul className="mobileSubmenu">
-
-                  {link.dropdown.map((item, i) => (
-                    <li key={i}>
-                      <NavLink
-                        to={`/${slugify(item.label)}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-        {dualTitleBlock && (
-          <div className="langueBlock2">
-            <button
-              className={language === 'FR' ? 'selected' : ''}
-              onClick={() => changeLanguage('FR')}
-            >
-              {dualTitleBlock.titleOne || 'FR'}
-            </button>
-            <button
-              className={language === 'ENG' ? 'selected' : ''}
-              onClick={() => changeLanguage('ENG')}
-            >
-              {dualTitleBlock.titleTwo || 'ENG'}
+                <path
+                  d="M21.9595 8.62615C22.35 8.23562 22.983 8.23562 23.3735 8.62615C23.7641 9.01667 23.7641 9.64968 23.3735 10.0402L17.4139 15.9998L23.3735 21.9595L23.4426 22.035C23.763 22.4278 23.7397 23.0074 23.3735 23.3735C23.0074 23.7397 22.4278 23.763 22.035 23.4426L21.9595 23.3735L15.9998 17.4139L10.0402 23.3735C9.64968 23.7641 9.01667 23.7641 8.62615 23.3735C8.23562 22.983 8.23562 22.35 8.62615 21.9595L14.5858 15.9998L8.62615 10.0402C8.23562 9.64968 8.23562 9.01667 8.62615 8.62615C9.01667 8.23562 9.64968 8.23562 10.0402 8.62615L15.9998 14.5858L21.9595 8.62615Z"
+                  fill="#171933"
+                />
+              </svg>
             </button>
           </div>
-        )}
-      </ul>
-    </div>
-  </div>
-)}
+
+          <div className='content'>
+          
+
+            <ul>
+              {linksBlock?.map((link, index) => {
+                const hasDropdown = link.dropdown && link.dropdown.length > 0;
+                const childActive = isAnyChildActive(link);
+                const parentPath = `/${slugify(link.label)}`;
+
+                const parentActive =
+                  normalizePath(location.pathname) === normalizePath(parentPath);
+
+                return (
+                  <li key={index} className="mobileMenuItem">
+                    <div
+                      className="mobileMenuLink"
+                      onClick={() => {
+                        if (!hasDropdown) {
+                          setIsMobileMenuOpen(false);
+                        }
+                      }}
+                    >
+                      {hasDropdown ? (
+                        <span
+                          className={`mobileLink ${childActive || parentActive ? 'activeDrop' : ''
+                            }`}
+                        >
+                          {link.label}
+                        </span>
+                      ) : (
+                        <NavLink
+                          to={slugify(link.label) === 'home' ? '/' : `/${slugify(link.label)}`}
+                          className={({ isActive }) =>
+                            `mobileLink ${isActive ? 'active' : ''}`
+                          }
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {link.label}
+                        </NavLink>
+                      )}
+                    </div>
+
+                    {hasDropdown && (
+                      <ul className="mobileSubmenu">
+
+                        {link.dropdown.map((item, i) => (
+                          <li key={i}>
+                            <NavLink
+                              to={`/${slugify(item.label)}`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {item.label}
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+        
+              {dualTitleBlock && (
+                <div className="langueBlock2">
+                  <button
+                    className={language === 'FR' ? 'selected' : ''}
+                    onClick={() => changeLanguage('FR')}
+                  >
+                    {dualTitleBlock.titleOne || 'FR'}
+                  </button>
+                  <button
+                    className={language === 'ENG' ? 'selected' : ''}
+                    onClick={() => changeLanguage('ENG')}
+                  >
+                    {dualTitleBlock.titleTwo || 'ENG'}
+                  </button>
+                </div>
+              )}
+            </ul>
+                    <svg className='svgBack' width="375" height="427" viewBox="0 0 375 427" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-72.9094 368.835C-78.1944 359.351 -75.2464 347.411 -66.1147 341.538C-20.7901 312.389 111.981 227.963 232.182 160.98C352.384 93.9972 494.032 25.5019 542.666 2.29217C552.465 -2.38401 564.17 1.39078 569.455 10.8748L595.418 57.4657C601.237 67.9088 597.097 81.0673 586.319 86.2398C534.597 111.061 391.834 180.434 278.284 243.711C164.734 306.987 30.6299 391.898 -17.6892 422.826C-27.7584 429.271 -41.1269 425.869 -46.9464 415.426L-72.9094 368.835Z" fill="#F9F8F2"/>
+          </svg>
+
+          </div>
+        </div>
+      )}
 
 
     </nav>

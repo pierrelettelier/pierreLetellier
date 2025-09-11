@@ -1,56 +1,215 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" itemscope itemtype="https://schema.org/CreativeWork">
   <head>
+    <!-- Méta-informations essentielles -->
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/logo.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-   
-    <!--
-     <link rel="apple-touch-icon" href="./logo.ico" />
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    
+    <!-- SEO - Title et Meta Description optimisés -->
+    <title>Pierre Letellier - Conception 3D & Panorama 360° | Designer Visualisation 3D</title>
+    <meta name="description" content="Designer 3D spécialisé en maquettes 3D, panoramas 360°, rendus architecturaux et visualisation immersive. Expert en conception 3D pour projets d'architecture d'intérieur et design." />
+    
+    <!-- Mots-clés stratégiques -->
+    <meta name="keywords" content="conception 3D, maquette 3D, panorama 360, rendu 3D, visualisation architecturale, designer 3D, architecture intérieur 3D, animation 3D, visite virtuelle" />
+    
+    <!-- Informations géographiques et contact -->
+    <meta name="author" content="Pierre Letellier" />
+    <meta name="geo.region" content="FR" />
+    <meta name="geo.placename" content="France" />
+    <meta name="contact" content="hello@pierreletellier.com" />
+    
+    <!-- Open Graph pour les réseaux sociaux -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pierre Letellier - Conception 3D & Panorama 360°" />
+    <meta property="og:description" content="Designer 3D spécialisé en maquettes 3D, panoramas 360° et rendus architecturaux. Conception visuelle immersive pour vos projets." />
+    <meta property="og:url" content="https://pierreletellier.com" />
+    <meta property="og:image" content="https://pierreletellier.com/images/og-image-3d.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Pierre Letellier Design 3D" />
+    <meta property="og:locale" content="fr_FR" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pierre Letellier - Conception 3D & Panorama 360°" />
+    <meta name="twitter:description" content="Designer 3D spécialisé en maquettes 3D, panoramas 360° et rendus architecturaux." />
+    <meta name="twitter:image" content="https://votre-domaine.fr/images/twitter-card-3d.jpg" />
+    
+    <!-- Schema.org - Données structurées -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Pierre Letellier",
+      "jobTitle": "Designer 3D & Concepteur Visualisation",
+      "description": "Designer de formation, concepteur 3D par passion, je mets en image vos projets avec précision, réalisme et sensibilité.",
+      "url": "https://votre-domaine.fr",
+      "sameAs": [
+        "https://www.linkedin.com/in/pierre-letellier",
+        "https://www.instagram.com/pierre.letellier.3d"
+      ],
+      "knowsAbout": [
+        "Conception 3D",
+        "Maquette 3D", 
+        "Panorama 360°",
+        "Rendu architectural",
+        "Visualisation 3D",
+        "Animation 3D",
+        "Design d'intérieur"
+      ],
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Master en architecture d'intérieur et design"
+      },
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Rendus 3D fixes",
+            "description": "Création de visuels 3D photoréalistes pour projets architecturaux"
+          }
+        },
+        {
+          "@type": "Offer", 
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Animations 3D",
+            "description": "Réalisation d'animations et parcours virtuels en 3D"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "Visuels 360°",
+            "description": "Création de panoramas immersifs et visites virtuelles 360°"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Favicon et icônes -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="  /favicon.ico" />
+
+    <!-- Manifest PWA -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" />
+    
+    <!-- Photo Sphere Viewer pour panoramas 360° -->
+    <link rel="preload" href="https://unpkg.com/photo-sphere-viewer@4.0.5/dist/photo-sphere-viewer.css" as="style" />
+    <link rel="stylesheet" href="https://unpkg.com/photo-sphere-viewer@4.0.5/dist/photo-sphere-viewer.css" />
+    
+    <!-- Robots et indexation -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    
+    <!-- Langues alternatives (à adapter selon vos besoins) -->
+    <link rel="alternate" hreflang="fr" href="https://votre-domaine.fr" />
+    <link rel="alternate" hreflang="en" href="https://votre-domaine.fr/en" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://votre-domaine.fr" />
+    
+    <!-- DNS Prefetch pour optimiser les performances -->
+    <link rel="dns-prefetch" href="//unpkg.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    
+    <!-- Sécurité -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
+    <!-- Analytics et tracking (à personnaliser) -->
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-      <!-- public/index.html -->
-<head>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/photo-sphere-viewer@4.0.5/dist/photo-sphere-viewer.css"
-  />
-</head>
-<body>
-  <script src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
-  <script src="https://unpkg.com/photo-sphere-viewer@4.0.5/dist/photo-sphere-viewer.min.js"></script>
-</body>
+    <style>
+    /* Reset basique */
 
-    <title>Pierre Letellier - Concepteur 3D & Designer</title>
+    /* Spinner */
+    .spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      border: 6px solid #ccc;
+      border-top-color: #333; /* couleur de l'animation */
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Animation rotation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+
+
   </head>
+  
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <!-- Contenu alternatif pour les navigateurs sans JavaScript -->
+    <noscript>
+      <div style="padding: 20px; text-align: center; background: #f5f5f5;">
+        <h1>Pierre Letellier - Concepteur 3D & Designer</h1>
+        <p>Pour une expérience optimale, veuillez activer JavaScript dans votre navigateur.</p>
+        <p>Designer de formation, concepteur 3D par passion, je mets en image vos projets avec précision, réalisme et sensibilité.</p>
+        <p>Services : Rendus 3D, Animations, Panoramas 360°, Design architectural</p>
+      </div>
+    </noscript>
+    
+    <!-- Contenu principal de l'application React -->
+    <div id="root">
+      <!-- Contenu de fallback pour le SEO en attendant le chargement React -->
+      <div class="spinner"></div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    </div>
+    
+    <!-- Scripts Three.js et Photo Sphere Viewer -->
+    <script defer src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
+    <script defer src="https://unpkg.com/photo-sphere-viewer@4.0.5/dist/photo-sphere-viewer.min.js"></script>
+    
+    <!-- Script de détection des performances -->
+    <script>
+      // Mesure des Core Web Vitals
+      function sendToAnalytics(metric) {
+        gtag('event', metric.name, {
+          value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+          event_category: 'Web Vitals',
+          event_label: metric.id,
+          non_interaction: true,
+        });
+      }
+      
+      // Import des métriques de performance (à implémenter selon vos besoins)
+      if (typeof window !== 'undefined') {
+        import('web-vitals').then(({getCLS, getFID, getFCP, getLCP, getTTFB}) => {
+          getCLS(sendToAnalytics);
+          getFID(sendToAnalytics);
+          getFCP(sendToAnalytics);
+          getLCP(sendToAnalytics);
+          getTTFB(sendToAnalytics);
+        });
+      }
+    </script>
   </body>
 </html>
