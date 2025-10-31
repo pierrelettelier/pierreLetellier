@@ -103,3 +103,10 @@
 a.LinkItems.active, a.DropdownItem.active{
   color: $linkactive !important;
 }
+
+.ServicesSection{
+  .DropdownItemElement:last-child{
+    background-color: red;
+    display: none;
+  }
+}

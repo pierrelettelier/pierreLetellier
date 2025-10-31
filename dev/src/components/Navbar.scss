@@ -247,6 +247,7 @@
                             align-items: center;
                             justify-content: center;
                             border-radius: 9px;
+                            text-wrap: nowrap;
                         }
                     }
 
@@ -484,6 +485,9 @@ li.DropdownItemElement {
                     }
 
 
+                }
+                li:last-child{
+                    display: none;
                 }
             }
         }

@@ -31,6 +31,9 @@
   }
 
 
+
+
+
   .header-title {
     margin-bottom: 56px;
 
@@ -173,57 +176,7 @@
   }
 }
 
-.work-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); // 3 colonnes pour A
-  gap: 32px;
 
-  .work-item {
-    text-align: center;
-
-    &.A {
-      grid-column: span 1; // occupe 1 colonne
-      height: 525px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 24px;
-      }
-    }
-
-    &.B {
-      grid-column: span 2; // occupe 2 colonnes
-      height: 525px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 24px;
-      }
-    }
-  }
-
-  @media screen and (max-width: 1060px) {
-    grid-template-columns: repeat(2, 1fr); // 2 colonnes
-    gap: 24px;
-
-    .work-item {
-      &.A {
-        grid-column: span 2; // A prend toute la largeur de la grille
-        height: 414px;
-
-      }
-
-      &.B {
-        grid-column: span 2;
-        height: 251px;
-      }
-    }
-  }
-}
 
 .wave {
   z-index: -1;
@@ -255,49 +208,102 @@
 }
 
 .modal-overlay {
-  background-color: #00000085;
-  backdrop-filter: blur(12px);
+    background-color: #00000085;
+            backdrop-filter: blur(12px);
   position: fixed;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  width: 100%;
-  height: 100%;
+  padding: 16px;
+  overflow: auto;
+  animation: fadeIn 0.25s ease-in-out;
+  height: 100vh;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
   .modal-content {
-    width: 90%;
-    background-color: white;
-    padding: 32px;
-    border-radius: 32px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    position: relative;
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    padding: 24px;
+    max-width: 90vw;
+    max-height: 90vh; // limiter la hauteur au viewport
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    animation: scaleIn 0.3s ease-in-out;
+    overflow: auto; // autorise le scroll si l'image est trop grande
+
+    @keyframes scaleIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    img,
+    model-viewer,
+    .panorama-container {
+      max-width: 100%;
+      max-height: calc(90vh - 48px); // 48px = padding vertical (24px top + 24px bottom)
+      object-fit: contain;
+      border-radius: 16px;
+      display: block;
+    }
+
+    @media screen and (max-width: 1060px) {
+      padding: 16px;
+      border-radius: 16px;
+
+      img,
+      model-viewer,
+      .panorama-container {
+        max-height: calc(100vh - 32px); // ajustement padding mobile
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      padding: 12px;
+      max-width: 100%;
+      max-height: 100vh;
+
+      img,
+      model-viewer,
+      .panorama-container {
+        max-height: calc(100vh - 24px); // petit padding sur mobile
+      }
+    }
 
     .close-btn {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
+      top: 12px;
+      right: 12px;
+      background-color: rgba(50, 51, 70, 0.7);
+      color: #fff;
       border: none;
-      cursor: pointer;
-      font-size: 24px;
-      background-color: #32334682;
       width: 32px;
       height: 32px;
-      border-radius: 100%;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: rgba(50, 51, 70, 0.9);
+        transform: scale(1.1);
+      }
     }
   }
 }
+
 
 .last-word {
   position: relative;
@@ -309,13 +315,203 @@
   }
 
   svg {
-    z-index: 1;
+   z-index: 1;
     position: absolute;
     bottom: -8px;
     left: -2%;
-    width: 110%; // prend toute la largeur
-    height: 30px;
     display: block;
+    width: 110%;
   }
 
+}
+
+.noneELement{
+  position: absolute;
+}
+
+.work-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .work-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+
+    .work-item {
+      overflow: hidden;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 526px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      &.V {
+        aspect-ratio: 3 / 4; // vertical
+        flex: 1;
+      }
+
+      &.H {
+        aspect-ratio: 4 / 3; // horizontal
+        flex: 1.5;
+      }
+    }
+
+    &.pattern-VVV {
+      .work-item {
+        flex: 1; // 3 colonnes équilibrées
+      }
+    }
+&.pattern-VH {
+  display: flex;      // s'assurer que c'est en flex
+  justify-content: space-between;
+  gap: 2rem;
+
+  .work-item {
+    height: 526px;    // ou la hauteur que tu veux
+  }
+
+  .H {
+    flex: 0 0 39%;    // prend 40% de la largeur
+  }
+
+  .V {
+    flex: 0 0 58%;    // prend 60% de la largeur
+  }
+}
+
+
+    &.pattern-HH {
+      .work-item {
+        flex: 1; // 2 colonnes centrées (H + H)
+      }
+    }
+  }
+}
+
+.work-list--classic {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // ✅ 2 colonnes fixes
+  gap: 32px;
+
+  .work-item {
+    height: 452px;
+    border-radius: 24px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  // ✅ Tablette
+  @media (max-width: 1024px) {
+    gap: 24px;
+
+    .work-item {
+      height: 420px;
+    }
+  }
+
+  // ✅ Mobile large → passe en 1 colonne
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; // ✅ une seule colonne
+    gap: 20px;
+
+    .work-item {
+      height: 360px;
+    }
+  }
+
+  // ✅ Mobile petit
+  @media (max-width: 480px) {
+    gap: 16px;
+
+    .work-item {
+      height: 280px;
+      border-radius: 16px;
+    }
+  }
+}
+
+  @media (max-width: 900px) {
+    .work-list--pattern{
+      .work-row{
+        display: flex;
+        flex-direction: column !important;
+      }
+    }
+  }
+
+
+  .work-page{
+    .mansory{
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 526px;
+      gap: 32px;
+      margin-bottom: 32px;
+      @media screen and (max-width: 1060px) {
+        flex-direction: column !important;
+        height: auto;
+        gap: 24px;
+        margin-bottom: 24px;
+        >div{
+          width: 100% !important;
+          height:450px !important;
+        }
+      }
+      >div{
+        cursor: pointer;
+        img{
+          width: 100%;
+          height: 100%;
+          display: block;
+          border-radius: 24px;
+          object-fit: cover;
+        }
+      }
+      .rowItems{
+        display: flex;
+      }
+    }
+
+    .landscape{
+      height: 100%;
+    }
+  }
+
+  .modal-content {
+  &.modal-360 {
+   width: 100%;
+   height: 100%;
+  }
+  
+  &.modal-video {
+     width: 100%;
+   height: 100%;
+  }
+  
+  //&.modal-image {
+    // Styles spécifiques pour les images
+  //}
+}
+
+.youtube-container{
+  height: 100% !important;
 }

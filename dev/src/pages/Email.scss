@@ -1,0 +1,119 @@
+/* Import des polices */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700;800;900&display=swap');
+
+
+.bodyEmail{
+    padding: 200px;
+
+.Container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: auto;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.topElement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 38px;
+  height: 82px;
+}
+
+.topElement h1 {
+  font-weight: 700;
+  font-size: 16px;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+.topElement h2 {
+  font-weight: 400;
+  font-size: 12px;
+  font-family: "Montserrat Alternates", sans-serif;
+  margin-top: 4px;
+  color: #585867;
+}
+
+.Logo {
+  margin-right: 45px;
+}
+
+.title {
+  margin-right: 175px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.link {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  padding-right: 20px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.link a {
+  margin-left: 10px;
+}
+
+.elementBottom {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.elementBottom .block {
+  display: flex;
+  color: #fff;
+  background-color: #22224A;
+  padding: 6px 20px;
+  padding-left: 22px;
+  border-top-left-radius: 100px;
+}
+
+.elementBottom .block a {
+  color: #fff;
+  font-size: 8px;
+  font-weight: 400;
+  font-family: "Montserrat Alternates", sans-serif;
+  text-decoration: none;
+  padding-right: 8px;
+  border-right: 1px solid #fff;
+  margin-right: 8px;
+}
+
+.elementBottom .block div {
+  display: flex;
+  align-items: center;
+}
+
+.elementBottom .block div svg {
+  margin-right: 4px;
+}
+
+.none {
+  border-right: none !important;
+  margin-right: 0px;
+  padding-right: 0px !important;
+}
+
+.svgelement {
+  position: absolute;
+  z-index: -1;
+  left: -40px;
+}
+
+}

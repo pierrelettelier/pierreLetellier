@@ -5,6 +5,13 @@ import './Navbar.scss'
 
 import { LanguageContext } from '../LanguageContext';
 
+import imageUrlBuilder from '@sanity/image-url'
+
+const builder = imageUrlBuilder(client)
+
+export function urlFor(source) {
+  return builder.image(source)
+}
 
 
 export default function Navbar() {
@@ -80,6 +87,26 @@ export default function Navbar() {
     return link.dropdown.some(item => normalizePath(`/${slugify(item.label)}`) === current)
   }
 
+  const slugMapENGtoFR = {
+  "3dfloorplan": "plan3damenage",
+  "3dperspective": "perspective3d",
+  "360panorama": "panorama360",
+  "3danimation": "animation3d",
+  "plandemasse": "plandemasse",
+
+}
+
+const getSlug = (label) => {
+  if (language === "ENG") {
+    // Si on est en ENG, vérifier si on a une correspondance spéciale
+    const mapped = slugMapENGtoFR[slugify(label)];
+    return mapped ? mapped : slugify(label);
+  }
+  // Par défaut FR
+  return slugify(label);
+};
+
+
   return (
     <nav className='Navbar'>
       <NavLink to='/' className='LogoNav'>
@@ -132,7 +159,7 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `LinkItems ${isActive ? 'active' : 'inactive'}`
                   }
-                  to={slugify(link.label) === 'home' ? '/' : `/${slugify(link.label)}`}
+                  to={slugify(link.label) === 'accueil' ? '/' : `/${slugify(link.label)}`}
                 >
                   {link.label}
                 </NavLink>
@@ -158,15 +185,16 @@ export default function Navbar() {
                                 className={({ isActive }) =>
                                   `DropdownItem ${isActive ? 'active' : 'inactive'}`
                                 }
-                                to={`/${slugify(item.label)}`}
+                                 to={`/${getSlug(item.label)}`}
                               >
                                 {item.image?.asset?.url && (
                                   <img
                                     onContextMenu={(e) => e.preventDefault()} // Empêche clic droit
                                     draggable="false"
-                                    src={item.image.asset.url}
+                                    src={`${item.image?.asset?.url}?q=40&fm=webp`}
                                     alt={item.label}
                                     className="DropdownImage"
+                                    
                                   />
                                 )}
                                 <p>{item.label}</p>
@@ -176,43 +204,11 @@ export default function Navbar() {
                         </div>
                       </ul>
 
-                      {/* Bloc séparé pour le dernier élément */}
-                      {link.dropdown.length > 0 && (
-                        <ul className="DropdownList2 last-section">
 
-                          {(() => {
-                            const lastItem = link.dropdown[link.dropdown.length - 1];
-                            return (
-                              <li className="DropdownItemElement">
-                                <NavLink
-                                  className={({ isActive }) =>
-                                    `DropdownItem ${isActive ? 'active' : 'inactive'}`
-                                  }
-                                  to={`/${slugify(lastItem.label)}`}
-                                >
-                                  <span>Plus</span>
-                                  <p>{lastItem.label}
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <path d="M14.3965 6.55577C14.6421 6.22226 15.1108 6.15103 15.4443 6.39659H15.4453L15.4463 6.39757C15.447 6.39809 15.4481 6.39868 15.4492 6.39952L15.5039 6.44054C15.5417 6.46873 15.5973 6.50995 15.667 6.56261C15.8064 6.66786 16.0045 6.81948 16.2422 7.00499C16.7172 7.37563 17.3532 7.88565 17.9912 8.43956C18.6256 8.99033 19.2802 9.59908 19.7812 10.1661C20.0309 10.4487 20.2585 10.7389 20.4277 11.0196C20.5846 11.2799 20.75 11.6266 20.75 12.0001C20.75 12.3737 20.5846 12.7203 20.4277 12.9806C20.2585 13.2614 20.0309 13.5515 19.7812 13.8341C19.2802 14.4011 18.6256 15.0099 17.9912 15.5607C17.3532 16.1146 16.7172 16.6246 16.2422 16.9952C16.0045 17.1807 15.8064 17.3324 15.667 17.4376C15.5973 17.4903 15.5417 17.5315 15.5039 17.5597L15.4492 17.6007C15.4481 17.6015 15.447 17.6021 15.4463 17.6026L15.4453 17.6036H15.4443C15.1108 17.8492 14.6421 17.778 14.3965 17.4444C14.1509 17.1109 14.2221 16.6422 14.5557 16.3966V16.3956C14.5561 16.3953 14.5566 16.3944 14.5576 16.3937C14.5597 16.3921 14.5639 16.3901 14.5684 16.3868C14.5773 16.3802 14.5909 16.3706 14.6084 16.3575C14.6438 16.3311 14.6957 16.2909 14.7627 16.2403C14.8967 16.1391 15.0896 15.9927 15.3203 15.8126C15.7827 15.4518 16.3971 14.9589 17.0088 14.4278C17.6242 13.8936 18.2199 13.3348 18.6562 12.8409C18.6832 12.8104 18.7091 12.7796 18.7344 12.7501H4C3.58579 12.7501 3.25 12.4143 3.25 12.0001C3.25 11.5859 3.58579 11.2501 4 11.2501H18.7344C18.7091 11.2206 18.6832 11.1898 18.6562 11.1593C18.2199 10.6654 17.6242 10.1067 17.0088 9.57238C16.3971 9.0413 15.7827 8.54846 15.3203 8.18761C15.0896 8.00754 14.8967 7.8611 14.7627 7.75988C14.6957 7.70929 14.6438 7.66908 14.6084 7.64269C14.5909 7.62962 14.5773 7.61998 14.5684 7.61339C14.5639 7.6101 14.5597 7.60813 14.5576 7.60656C14.5566 7.60581 14.5561 7.60494 14.5557 7.6046V7.60363C14.2221 7.35802 14.1509 6.88931 14.3965 6.55577Z" fill="#7D7E89" />
-                                    </svg>
-
-
-                                  </p>
-                                </NavLink>
-                              </li>
-                            );
-                          })()}
-                          <svg width="339" height="305" viewBox="0 0 339 305" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M393.083 -12.9078C397.972 -7.28093 397.676 1.15811 392.369 6.39265C366.027 32.3738 288.727 107.835 217.411 169.802C146.095 231.77 60.5828 297.78 31.1789 320.237C25.2548 324.762 16.857 323.877 11.9678 318.25L-12.0512 290.607C-17.435 284.412 -16.5095 274.986 -9.99708 269.99C21.2542 246.014 107.392 179.257 174.761 120.718C242.131 62.18 320.258 -13.7957 348.361 -41.3943C354.218 -47.1455 363.68 -46.7461 369.064 -40.5502L393.083 -12.9078Z" fill="#F2EEE2" />
-                          </svg>
-
-                        </ul>
-                      )}
                     </div>
                   </div>
                 )}
               </div>
-
             </li>
           )
         })}
@@ -271,7 +267,7 @@ export default function Navbar() {
           </div>
 
           <div className='content'>
-          
+
 
             <ul>
               {linksBlock?.map((link, index) => {
@@ -301,7 +297,7 @@ export default function Navbar() {
                         </span>
                       ) : (
                         <NavLink
-                          to={slugify(link.label) === 'home' ? '/' : `/${slugify(link.label)}`}
+                          to={slugify(link.label) === 'accueil' ? '/' : `/${slugify(link.label)}`}
                           className={({ isActive }) =>
                             `mobileLink ${isActive ? 'active' : ''}`
                           }
@@ -318,7 +314,7 @@ export default function Navbar() {
                         {link.dropdown.map((item, i) => (
                           <li key={i}>
                             <NavLink
-                              to={`/${slugify(item.label)}`}
+                              to={`/${getSlug(item.label)}`}
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {item.label}
@@ -330,7 +326,7 @@ export default function Navbar() {
                   </li>
                 );
               })}
-        
+
               {dualTitleBlock && (
                 <div className="langueBlock2">
                   <button
@@ -348,9 +344,9 @@ export default function Navbar() {
                 </div>
               )}
             </ul>
-                    <svg className='svgBack' width="375" height="427" viewBox="0 0 375 427" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M-72.9094 368.835C-78.1944 359.351 -75.2464 347.411 -66.1147 341.538C-20.7901 312.389 111.981 227.963 232.182 160.98C352.384 93.9972 494.032 25.5019 542.666 2.29217C552.465 -2.38401 564.17 1.39078 569.455 10.8748L595.418 57.4657C601.237 67.9088 597.097 81.0673 586.319 86.2398C534.597 111.061 391.834 180.434 278.284 243.711C164.734 306.987 30.6299 391.898 -17.6892 422.826C-27.7584 429.271 -41.1269 425.869 -46.9464 415.426L-72.9094 368.835Z" fill="#F9F8F2"/>
-          </svg>
+            <svg className='svgBack' width="375" height="427" viewBox="0 0 375 427" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M-72.9094 368.835C-78.1944 359.351 -75.2464 347.411 -66.1147 341.538C-20.7901 312.389 111.981 227.963 232.182 160.98C352.384 93.9972 494.032 25.5019 542.666 2.29217C552.465 -2.38401 564.17 1.39078 569.455 10.8748L595.418 57.4657C601.237 67.9088 597.097 81.0673 586.319 86.2398C534.597 111.061 391.834 180.434 278.284 243.711C164.734 306.987 30.6299 391.898 -17.6892 422.826C-27.7584 429.271 -41.1269 425.869 -46.9464 415.426L-72.9094 368.835Z" fill="#F9F8F2" />
+            </svg>
 
           </div>
         </div>

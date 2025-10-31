@@ -53,6 +53,25 @@ export default function Footer() {
 
   const { logo, linksBlock, socialLinks } = navbarData;
 
+
+   const slugMapENGtoFR = {
+  "3dfloorplan": "plan3damenage",
+  "3dperspective": "perspective3d",
+  "360panorama": "panorama360",
+  "3danimation": "animation3d",
+
+}
+
+const getSlug = (label) => {
+  if (language === "ENG") {
+    // Si on est en ENG, vérifier si on a une correspondance spéciale
+    const mapped = slugMapENGtoFR[slugify(label)];
+    return mapped ? mapped : slugify(label);
+  }
+  // Par défaut FR
+  return slugify(label);
+};
+
   return (
     <div className='Footer'>
       <div className='Top'>
@@ -92,20 +111,20 @@ export default function Footer() {
 
 
         {/* Services */}
-        <section>
+        <section className='ServicesSection'>
           <h2>Services</h2>
           {linksBlock?.map((link) =>
             link.dropdown?.length > 0 && (
               <ul key={slugify(link.label)}>
                 {link.dropdown
-                  .filter((item) => item.label?.toLowerCase() !== 'design project')
+                  .filter((item) => item.label?.toLowerCase() !== 'D PROJECT')
                   .map((item) => (
                     <li key={slugify(item.label)} className="DropdownItemElement">
                       <NavLink
                         className={({ isActive }) =>
                           `DropdownItem ${isActive ? 'active' : 'inactive'}`
                         }
-                        to={`/${slugify(item.label)}`}
+                        to={`/${getSlug(item.label)}`}
                       >
                         <p>{item.label}</p>
                       </NavLink>
